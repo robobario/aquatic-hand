@@ -24,7 +24,6 @@ class World:
     def spawn(self, character):
         location = self.arena.getlocation(Point(0, 0))
         location.additem(character)
-        pass
 
     def attempt(self, who, action):
         self.pcaction(who, action)
