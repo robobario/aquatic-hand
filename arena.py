@@ -6,10 +6,10 @@ __author__ = 'python'
 class Arena:
     def __init__(self, width, height):
         self.grid = []
-        for i in range(height):
+        for x in range(height):
             row = []
             self.grid.append(row)
-            for j in range(width):
+            for y in range(width):
                 row.append(Location())
 
     def getlocation(self, point):
