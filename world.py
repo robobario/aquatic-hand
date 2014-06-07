@@ -5,7 +5,7 @@ __author__ = 'python'
 
 class WorldSnapshot:
     def __init__(self, arena):
-        pass
+        self.arena = arena
 
 
 class World:
