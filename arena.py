@@ -21,6 +21,9 @@ class Arena:
                 if character in self.grid[x][y]:
                     return Point(x, y)
 
+    def findcharacterlocation(self, character):
+        return self.getlocation(self.findcharacter(character))
+
     def moveitem(self, item, to):
         self.getlocation(self.findcharacter(item)).removeitem(item)
         self.grid[to.x][to.y].additem(item)

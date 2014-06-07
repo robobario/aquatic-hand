@@ -46,6 +46,7 @@ class World:
     def spawn(self, character):
         location = self.arena.getlocation(self.randomUnoccupiedPoint())
         location.additem(character)
+        self.pcs.append(character)
 
     def attempt(self, who, action):
         self.pcaction(who, action)
@@ -64,7 +65,7 @@ class World:
 
     def checkdeaths(self):
         for character in self.npcs + self.pcs:
-            character.checkdead()
+            character.checkalive()
 
     def snapshot(self):
         return WorldSnapshot(self.arena)
