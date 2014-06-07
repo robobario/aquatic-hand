@@ -1,7 +1,8 @@
 from unittest import TestCase
 
+from actions import Move
+from character import Pc
 from spacial import Point
-
 from world import World
 
 
@@ -13,12 +14,18 @@ class TestWorld(TestCase):
         world = World()
         world.arena.getlocation(Point(1, 5)).additem('asdf')
         world.arena.getlocation(Point(0, 5)).additem('item')
-        world.move('asdf', 'up', lambda x: x)
         self.assertEqual(world.arena.findcharacter('asdf').gettuple(), Point(1, 5).gettuple())
         world.move('item', 'right', lambda x: x)
         self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
         world.move('item', 'up', lambda x: x)
         self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
+
+    def test_move_edgecase(self):
+        world = World()
+        man = Pc()
+        world.arena.getlocation(Point(11, 11)).additem(man)
+        world.move(man, 'right', lambda x: x)
+        self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(11, 11).gettuple())
 
     def test_death(self):
         world = World()

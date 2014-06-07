@@ -14,14 +14,15 @@ class Character:
     def attack(self, enemy):
         enemy.hp -= self.strength
 
-    def checkdead(self):
+    def checkalive(self):
         if self.hp <= 0:
             self.alive = False
         return self.alive
 
     def kill(self):
         self.hp = -10
-        
+
+
 class Npc(Character):
     def __init__(self, name):
         super().__init__(name)

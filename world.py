@@ -80,8 +80,8 @@ class World:
     def move(self, who, direction, log):
         point = self.arena.findcharacter(who)
         to = point.add(directions[direction])
-        tolocation = self.arena.getlocation(to)
         if self.arena.ingrid(to):
+            tolocation = self.arena.getlocation(to)
             if not tolocation.characters:
                 self.arena.moveitem(who, to)
                 log(who.name + " moved " + direction)

@@ -32,3 +32,6 @@ class TestArena(TestCase):
         self.assertEqual(arena.ingrid(Point(0, -1)), False)
         self.assertEqual(arena.ingrid(Point(1, 0)), True)
         self.assertEqual(arena.ingrid(Point(0, 4)), True)
+        self.assertEqual(arena.ingrid(Point(0, 5)), True)
+        self.assertEqual(arena.ingrid(Point(1, 12)), False)
+        self.assertEqual(arena.ingrid(Point(12, 1)), False)
