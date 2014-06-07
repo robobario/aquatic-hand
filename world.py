@@ -51,6 +51,7 @@ class World:
         self.pcaction(who, action)
         self.npcaction()
         self.spawnMobs()
+        self.checkdeaths()
         return self.snapshot()
 
     def pcaction(self, who, action):
@@ -60,6 +61,10 @@ class World:
         for npc in self.npcs:
             action = npc.decide(self.arena)
             action.act(npc, self)
+
+    def checkdeaths(self):
+        for character in npcs + pcs:
+            character.checkdead()
 
     def snapshot(self):
         return WorldSnapshot(self.arena)
