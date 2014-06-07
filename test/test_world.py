@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from actions import Move
-from character import Pc
+from character import Pc, Npc
 from spacial import Point
 from world import World
 
@@ -39,4 +39,20 @@ class TestWorld(TestCase):
         self.assertEqual(0, len(world.pcs))
         if world.arena.ingrid(loc.add(Point(0, 1))):
             self.assertGreater(len(world.arena.getlocation(loc.add(Point(0, 1))).items), 0)
+
+    def test_pickup(self):
+        world = World()
+        man = Pc()
+        world.arena.getlocation(Point(5, 5)).additem(man)
+        world.arena.getlocation(Point(5, 5)).items.append('key')
+        world.pickup(man, lambda x: x)
+        self.assertGreater(len(man.inventory), 0)
+        kitty = Npc('cat')
+        world.arena.getlocation(Point(5, 7)).additem(kitty)
+        kitty.kill()
+        world.attempt(man, Move('right'))
+        world.attempt(man, Move('right'))
+        world.pickup(man, lambda x: x)
+
+
 

@@ -89,6 +89,11 @@ class World:
                 who.attack(tolocation.characters[0])
                 log(who.name + " attacket " + tolocation.characters[0].name)
 
+    def pickup(self, who, log):
+        location = self.arena.findcharacterlocation(who)
+        item = who.pickup(location.items.pop())
+        log(who.name + " picks up " + str(item))
+
 
 
 

@@ -10,6 +10,10 @@ class Character:
         self.alive = True
         self.name = name
         self.types = []
+        self.inventory = []
+
+    def __str__(self):
+        return self.name
 
     def attack(self, enemy):
         enemy.hp -= self.strength
@@ -22,10 +26,15 @@ class Character:
     def kill(self):
         self.hp = -10
 
+    def pickup(self, item):
+        self.inventory.append(item)
+        return item
+
 
 class Npc(Character):
     def __init__(self, name):
         super().__init__(name)
+
 
     def decide(self, arena):
         return actions.Move('up')
