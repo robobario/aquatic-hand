@@ -24,3 +24,7 @@ class Game:
         worldsnap = self.world.attempt(self.hero, action)
         return Snapshot(worldsnap, self.hero)
 
+    def snapshot(self):
+        snap = self.world.snapshot()
+        return Snapshot(snap, self.hero)
+

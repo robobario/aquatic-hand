@@ -3,16 +3,20 @@ from game import Game
 
 __author__ = 'python'
 
-map = {
-    "up": Move("up")
+actions = {
+    "up": Move("up"),
+    "down": Move("down"),
+    "left": Move("left"),
+    "right": Move("right")
 }
 
-class CliController:
 
+class CliController:
     def __init__(self):
         self.game = Game()
 
     def main(self):
+        self.display(self.game.snapshot())
         while self.game.isActive():
             instr = self.getinput()
             action = self.translate(instr)
@@ -26,11 +30,10 @@ class CliController:
         return input("what do? ololo\n")
 
     def translate(self, instr):
-        if instr in map:
-            return map[instr]
+        if instr in actions:
+            return actions[instr]
         else:
             return None
-
 
     def display(self, outsnapshot):
         pass
