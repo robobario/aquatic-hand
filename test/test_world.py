@@ -12,13 +12,13 @@ __author__ = 'python'
 class TestWorld(TestCase):
     def test_move(self):
         world = World()
-        world.arena.getlocation(Point(1, 5)).additem('asdf')
-        world.arena.getlocation(Point(0, 5)).additem('item')
-        self.assertEqual(world.arena.findcharacter('asdf').gettuple(), Point(1, 5).gettuple())
-        world.move('item', 'right', lambda x: x)
-        self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
-        world.move('item', 'up', lambda x: x)
-        self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
+        man = Pc()
+        world.arena.getlocation(Point(1, 5)).additem(man)
+        self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(1, 5).gettuple())
+        world.move(man, 'right', lambda x: x)
+        self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(1, 6).gettuple())
+        world.move(man, 'up', lambda x: x)
+        self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(0, 6).gettuple())
 
     def test_move_edgecase(self):
         world = World()
