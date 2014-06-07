@@ -17,7 +17,7 @@ class Game:
         self.world.spawn(self.hero)
         self.active = True
 
-    def active(self):
+    def isActive(self):
         return self.active
 
     def action(self, action):

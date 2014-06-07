@@ -1,23 +1,36 @@
+from actions import Move
 from game import Game
 
 __author__ = 'python'
 
+map = {
+    "up": Move("up")
+}
 
 class CliController:
+
     def __init__(self):
         self.game = Game()
 
     def main(self):
-        while self.game.active():
+        while self.game.isActive():
             instr = self.getinput()
-            outsnapshot = self.game.action(self.translate(instr))
-            self.display(outsnapshot)
+            action = self.translate(instr)
+            if action is not None:
+                outsnapshot = self.game.action(action)
+                self.display(outsnapshot)
+            else:
+                print("bad input")
 
     def getinput(self):
-        return ''
+        return input("what do? ololo\n")
 
     def translate(self, instr):
-        pass
+        if instr in map:
+            return map[instr]
+        else:
+            return None
+
 
     def display(self, outsnapshot):
         pass
