@@ -1,6 +1,8 @@
+from character import Character
+
 __author__ = 'python'
 
-class pc:
 
+class Pc(Character):
     def __init__(self):
-        pass
+        super().__init__()

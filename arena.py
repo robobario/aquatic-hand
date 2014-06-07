@@ -1,6 +1,7 @@
 __author__ = 'python'
 
-class arena:
 
-    def __init__(self, grid):
-        self.grid = grid
+class Arena:
+    def __init__(self, width, height):
+        self.grid = []
+        pass

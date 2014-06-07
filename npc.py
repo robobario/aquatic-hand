@@ -1,6 +1,12 @@
+import actions
+from character import Character
+
 __author__ = 'python'
 
-class npc:
 
+class Npc(Character):
     def __init__(self):
-        pass
+        super().__init__()
+
+    def decide(self, arena):
+        return actions.Move('up')
