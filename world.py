@@ -10,6 +10,7 @@ directions = {
     "right": Point(0, 1)
 }
 
+
 class WorldSnapshot:
     def __init__(self, arena):
         self.arena = arena
@@ -28,6 +29,7 @@ class World:
     def attempt(self, who, action):
         self.pcaction(who, action)
         self.npcaction()
+        self.spawnMobs()
         return self.snapshot()
 
     def pcaction(self, who, action):
@@ -46,6 +48,9 @@ class World:
         pointto = point.add(directions[direction])
         if not self.arena.getlocation(pointto).contains and self.arena.ingrid(pointto):
             self.arena.moveitem(who, pointto)
+
+    def spawnMobs(self):
+        pass
 
 
 
