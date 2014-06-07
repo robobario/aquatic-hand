@@ -45,7 +45,7 @@ class World:
         pointto = point.add(directions[direction])
         moveto = self.arena.getlocation(pointto)
         if not moveto.contains:
-            self.arena.moveactor(who, pointto)
+            self.arena.moveitem(who, pointto)
 
 
 
