@@ -1,11 +1,22 @@
 __author__ = 'python'
 
 
+def getArena(snapshot):
+    world = snapshot.worldsnap
+    if world is None:
+        raise Exception('world is none')
+    arena = world.arena
+    if arena is None:
+        raise Exception('world has no arena')
+    if arena.grid is None or len(arena.grid) == 0:
+        raise Exception('arena grid is none or empty')
+    return arena
+
+
 def snapshotToString(snapshot):
     if snapshot is None:
-        return None
-    world = snapshot.worldsnap
-    arena = world.arena
+        raise Exception('snapshot is none')
+    arena = getArena(snapshot)
     result = printGrid(arena)
     hero = snapshot.hero
     result += printHero(hero)

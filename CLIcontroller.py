@@ -1,8 +1,13 @@
+import logging
+
 from actions import Move
 from game import Game
 from snapshot_printer import snapshotToString
 
+
 __author__ = 'python'
+
+logging.basicConfig(level=logging.DEBUG)
 
 actions = {
     "up": Move("up"),
@@ -16,16 +21,22 @@ class CliController:
     def __init__(self):
         self.game = Game()
 
+    def readActPrint(self):
+        instr = self.getinput()
+        action = self.translate(instr)
+        if action is not None:
+            outsnapshot = self.game.action(action)
+            self.display(outsnapshot)
+        else:
+            print("bad input")
+
     def main(self):
         self.display(self.game.snapshot())
         while self.game.isActive():
-            instr = self.getinput()
-            action = self.translate(instr)
-            if action is not None:
-                outsnapshot = self.game.action(action)
-                self.display(outsnapshot)
-            else:
-                print("bad input")
+            try:
+                self.readActPrint()
+            except Exception as e:
+                logging.exception(e)
 
     def getinput(self):
         return input("what do? ololo\n")
@@ -38,7 +49,6 @@ class CliController:
 
     def display(self, outsnapshot):
         print(snapshotToString(outsnapshot))
-
 
 
 if __name__ == '__main__':
