@@ -1,7 +1,7 @@
 from unittest import TestCase
 
+from character import Character
 from spacial import Point
-
 from world import World
 
 
@@ -19,3 +19,14 @@ class TestWorld(TestCase):
         self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
         world.move('item', 'up')
         self.assertEqual(world.arena.findcharacter('item').gettuple(), Point(0, 6).gettuple())
+
+    def test_spawnMobsOnAttempt(self):
+        world = World()
+        world.genMobs = lambda heroes: [Character()]
+        world.rng = lambda: 3
+        world.spawnMobs()
+        location = world.arena.getlocation(Point(3, 3))
+        self.assertEqual(1, len(location.characters))
+
+
+

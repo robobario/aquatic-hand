@@ -1,5 +1,9 @@
+import random
+
 from arena import Arena
+from bestiary import Bestiary
 from spacial import Point
+
 
 __author__ = 'python'
 
@@ -20,10 +24,27 @@ class World:
     def __init__(self):
         self.pcs = []
         self.npcs = []
-        self.arena = Arena(12, 12)
+        self.width = 12
+        self.height = 12
+        self.arena = Arena(self.width, self.height)
+        self.bestiary = Bestiary()
+        self.genMobs = self.bestiary.getRandomMobs
+        self.rng = lambda: random.randint(1, 100)
+
+    def randomUnoccupiedPoint(self):
+        def attempt(depth):
+            if depth > 5:
+                return None
+            point = Point(self.rng() % self.width, self.rng() % self.height)
+            if not self.arena.getlocation(point).characters:
+                return point
+            else:
+                return attempt(depth + 1)
+
+        return attempt(0)
 
     def spawn(self, character):
-        location = self.arena.getlocation(Point(0, 0))
+        location = self.arena.getlocation(self.randomUnoccupiedPoint())
         location.additem(character)
 
     def attempt(self, who, action):
@@ -50,7 +71,9 @@ class World:
             self.arena.moveitem(who, pointto)
 
     def spawnMobs(self):
-        pass
+        mobs = self.genMobs(self.pcs)
+        for mob in mobs:
+            self.spawn(mob)
 
 
 
