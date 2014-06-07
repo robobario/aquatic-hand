@@ -36,7 +36,8 @@ class CliController:
             return None
 
     def display(self, outsnapshot):
-        pass
+        hero = outsnapshot.hero
+        print("HP: " + str(hero.hp) + ", Strength: " + str(hero.strength))
 
 
 if __name__ == '__main__':
