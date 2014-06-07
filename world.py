@@ -63,7 +63,7 @@ class World:
             action.act(npc, self)
 
     def checkdeaths(self):
-        for character in npcs + pcs:
+        for character in self.npcs + self.pcs:
             character.checkdead()
 
     def snapshot(self):
