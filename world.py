@@ -66,8 +66,14 @@ class World:
             action.act(npc, self)
 
     def checkdeaths(self, log):
-        for character in self.npcs + self.pcs:
-            character.checkalive()
+        allchars = self.npcs + self.pcs
+        for character in allchars:
+            if not character.checkalive():
+                self.arena.findcharacterlocation(character).killcharacter(character)
+                if character in self.npcs:
+                    self.npcs.remove(character)
+                if character in self.pcs:
+                    self.pcs.remove(character)
 
     def spawnMobs(self, log):
         mobs = self.genMobs(self.pcs)

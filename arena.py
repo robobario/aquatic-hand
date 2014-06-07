@@ -35,6 +35,7 @@ class Arena:
 class Location:
     def __init__(self):
         self.characters = []
+        self.items = []
 
     def __contains__(self, item):
         return item in self.characters
@@ -48,3 +49,6 @@ class Location:
     def removeitem(self, item):
         if item in self:
             self.characters.remove(item)
+
+    def killcharacter(self, character):
+        self.items.append(self.characters.pop(self.characters.index(character)))

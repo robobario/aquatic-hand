@@ -33,8 +33,10 @@ class TestWorld(TestCase):
         world.spawn(man)
         location = world.arena.findcharacterlocation(man)
         location.characters[0].kill()
-        loc = world.arena.findcharacter(man).gettuple()
-        newloc = loc[0], loc[1] + 1
+        loc = world.arena.findcharacter(man)
         world.attempt(man, Move('right'))
-        self.assertEqual(world.arena.findcharacter(man).gettuple(), newloc)
         self.assertEqual(False, man.alive)
+        self.assertEqual(0, len(world.pcs))
+        if world.arena.ingrid(loc.add(Point(0, 1))):
+            self.assertGreater(len(world.arena.getlocation(loc.add(Point(0, 1))).items), 0)
+
