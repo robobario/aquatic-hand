@@ -7,3 +7,8 @@ class Move:
 
     def act(self, who, world, log):
         world.move(who, self.direction, log)
+
+
+class Rest:
+    def act(self, who, world, log):
+        pass

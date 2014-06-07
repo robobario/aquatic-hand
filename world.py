@@ -62,7 +62,7 @@ class World:
     def npcaction(self, log):
         for npc in self.npcs:
             action = npc.decide(self.arena)
-            action.act(npc, self)
+            action.act(npc, self, log)
 
     def checkdeaths(self, log):
         for character in self.npcs + self.pcs:
@@ -72,6 +72,7 @@ class World:
         mobs = self.genMobs(self.pcs)
         for mob in mobs:
             self.spawn(mob)
+            self.npcs.append(mob)
 
     def snapshot(self):
         return WorldSnapshot(self.arena)
@@ -79,8 +80,8 @@ class World:
     def move(self, who, direction, log):
         point = self.arena.findcharacter(who)
         to = point.add(directions[direction])
-        tolocation = self.arena.getlocation(to)
         if self.arena.ingrid(to):
+            tolocation = self.arena.getlocation(to)
             if not tolocation.characters:
                 self.arena.moveitem(who, to)
                 log(who.name + " moved " + direction)
