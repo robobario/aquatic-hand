@@ -1,3 +1,5 @@
+import actions
+
 __author__ = 'python'
 
 
@@ -15,3 +17,16 @@ class Character:
     def checkdead(self):
         if self.hp <= 0:
             self.alive = False
+
+
+class Npc(Character):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def decide(self, arena):
+        return actions.Move('up')
+
+
+class Pc(Character):
+    def __init__(self):
+        super().__init__()

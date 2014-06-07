@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from arena import Arena
 from bestiary import Cat
+from character import Pc
 from game import Snapshot
-from pc import Pc
 from snapshot_printer import snapshotToString
 from spacial import Point
 from world import WorldSnapshot

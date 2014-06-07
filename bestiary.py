@@ -1,6 +1,6 @@
 import random
 
-from npc import Npc
+from character import Npc
 
 
 __author__ = 'python'
@@ -15,7 +15,6 @@ class Bestiary:
         if self.rng() % 5 == 0:
             mobs.append(Cat())
         return mobs
-
 
 class Cat(Npc):
     def __init__(self):

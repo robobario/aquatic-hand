@@ -1,4 +1,4 @@
-from pc import Pc
+from character import Pc
 from world import World
 
 __author__ = 'python'
