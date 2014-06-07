@@ -16,9 +16,9 @@ class Arena:
         return self.grid[point.x][point.y]
 
     def findcharacter(self, character):
-        for x in self.grid:
-            for y in x:
-                if character in y:
+        for x in range(len(self.grid)):
+            for y in range(len(self.grid[x])):
+                if character in self.grid[x][y]:
                     return Point(x, y)
 
     def moveitem(self, item, pointto):
