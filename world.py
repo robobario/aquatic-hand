@@ -28,7 +28,7 @@ class World:
     def npcaction(self):
         for npc in self.npcs:
             action = npc.decide(self.arena)
-            action.act(npc, self.world)
+            action.act(npc, self)
 
     def move(self, who, direction):
         pass
