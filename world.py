@@ -29,7 +29,7 @@ class World:
     def attempt(self, who, action):
         self.pcaction(who, action)
         self.npcaction()
-        return WorldSnapshot(self.arena)
+        return self.snapshot()
 
     def pcaction(self, who, action):
         action.act(who, self)
@@ -38,6 +38,9 @@ class World:
         for npc in self.npcs:
             action = npc.decide(self.arena)
             action.act(npc, self)
+
+    def snapshot(self):
+        return WorldSnapshot(self.arena)
 
     def move(self, who, direction):
         pass
