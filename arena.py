@@ -21,6 +21,14 @@ class Arena:
                 if character in self.grid[x][y]:
                     return Point(x, y)
 
+    def getallcharacter(self):
+        allcharacters = []
+        for x in self.grid:
+            for y in x:
+                for z in y.characters:
+                    allcharacters.append(z)
+        return allcharacters
+
     def findcharacterlocation(self, character):
         return self.getlocation(self.findcharacter(character))
 

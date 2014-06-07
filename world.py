@@ -46,7 +46,6 @@ class World:
     def spawn(self, character):
         location = self.arena.getlocation(self.randomUnoccupiedPoint())
         location.additem(character)
-        self.pcs.append(character)
 
     def attempt(self, who, action):
         log = []
@@ -66,14 +65,9 @@ class World:
             action.act(npc, self)
 
     def checkdeaths(self, log):
-        allchars = self.npcs + self.pcs
-        for character in allchars:
+        for character in self.arena.getallcharacter():
             if not character.checkalive():
                 self.arena.findcharacterlocation(character).killcharacter(character)
-                if character in self.npcs:
-                    self.npcs.remove(character)
-                if character in self.pcs:
-                    self.pcs.remove(character)
 
     def spawnMobs(self, log):
         mobs = self.genMobs(self.pcs)
