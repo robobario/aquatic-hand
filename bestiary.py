@@ -22,5 +22,6 @@ class Cat(Npc):
         super().__init__("cat")
         self.hp = 10
         self.strength = 2
+        self.types.append("cat")
 
     pass

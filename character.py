@@ -7,6 +7,7 @@ class Character:
         self.strength = 10
         self.alive = True
         self.name = name
+        self.types = []
 
     def attack(self, enemy):
         enemy.hp -= self.strength
