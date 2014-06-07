@@ -1,5 +1,8 @@
 __author__ = 'python'
 
+symbols = {
+    "cat": "x"
+}
 
 def getArena(snapshot):
     world = snapshot.worldsnap
@@ -25,8 +28,10 @@ def snapshotToString(snapshot):
 
 def symbolForLocation(location):
     first = location.characters[0]
-    if "cat" in first.types:
-        return "x"
+    if first.types:
+        type = first.types[0]
+        if type in symbols:
+            return symbols[type]
     return '0'
 
 
