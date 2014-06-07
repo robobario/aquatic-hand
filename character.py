@@ -11,3 +11,7 @@ class Character:
 
     def attack(self, enemy):
         enemy.hp -= self.strength
+
+    def checkdead(self):
+        if self.hp <= 0:
+            self.alive = False

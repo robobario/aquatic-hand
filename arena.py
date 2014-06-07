@@ -21,9 +21,9 @@ class Arena:
                 if character in self.grid[x][y]:
                     return Point(x, y)
 
-    def moveitem(self, item, pointto):
+    def moveitem(self, item, to):
         self.getlocation(self.findcharacter(item)).removeitem(item)
-        self.grid[pointto.x][pointto.y].additem(item)
+        self.grid[to.x][to.y].additem(item)
 
     def ingrid(self, point):
         return 0 <= point.x < len(self.grid) and 0 <= point.y < len(self.grid[0])

@@ -66,9 +66,13 @@ class World:
 
     def move(self, who, direction):
         point = self.arena.findcharacter(who)
-        pointto = point.add(directions[direction])
-        if not self.arena.getlocation(pointto).characters and self.arena.ingrid(pointto):
-            self.arena.moveitem(who, pointto)
+        to = point.add(directions[direction])
+        tolocation = self.arena.getlocation(to)
+        if self.arena.ingrid(to):
+            if not tolocation.characters:
+                self.arena.moveitem(who, to)
+            elif len(tolocation.characters) > 0:
+                who.attack(tolocation.characters[0])
 
     def spawnMobs(self):
         mobs = self.genMobs(self.pcs)
