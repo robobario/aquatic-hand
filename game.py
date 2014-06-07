@@ -1,13 +1,14 @@
-from pc import Pc
+from character import Pc
 from world import World
 
 __author__ = 'python'
 
 
 class Snapshot:
-    def __init__(self, worldsnap, hero):
+    def __init__(self, worldsnap, hero, log):
         self.worldsnap = worldsnap
         self.hero = hero
+        self.log = log
 
 
 class Game:
@@ -21,10 +22,11 @@ class Game:
         return self.active
 
     def action(self, action):
-        worldsnap = self.world.attempt(self.hero, action)
-        return Snapshot(worldsnap, self.hero)
+        log = self.world.attempt(self.hero, action)
+        snap = self.world.snapshot()
+        return Snapshot(snap, self.hero, log)
 
     def snapshot(self):
         snap = self.world.snapshot()
-        return Snapshot(snap, self.hero)
+        return Snapshot(snap, self.hero, [])
 
