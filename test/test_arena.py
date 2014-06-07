@@ -26,5 +26,9 @@ class TestArena(TestCase):
         self.assertEqual(found.x, 3)
         self.assertEqual(found.y, 5)
 
-
-
+    def test_ingrid(self):
+        arena = Arena(12, 12)
+        self.assertEqual(arena.ingrid(Point(-1, 0)), False)
+        self.assertEqual(arena.ingrid(Point(0, -1)), False)
+        self.assertEqual(arena.ingrid(Point(1, 0)), True)
+        self.assertEqual(arena.ingrid(Point(0, 4)), True)

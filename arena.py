@@ -25,6 +25,9 @@ class Arena:
         self.getlocation(self.findcharacter(item)).removeitem(item)
         self.grid[pointto.x][pointto.y].additem(item)
 
+    def ingrid(self, point):
+        return 0 <= point.x < len(self.grid) and 0 <= point.y < len(self.grid[0])
+
 
 class Location:
     def __init__(self):

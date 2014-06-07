@@ -8,3 +8,6 @@ class Point:
 
     def add(self, point):
         return Point(self.x + point.x, self.y + point.y)
+
+    def gettuple(self):
+        return self.x, self.y
