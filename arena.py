@@ -23,7 +23,7 @@ class Arena:
 
     def moveitem(self, item, pointto):
         self.getlocation(self.findcharacter(item)).removeitem(item)
-        self.grid[pointto.x, pointto.y].additem(item)
+        self.grid[pointto.x][pointto.y].additem(item)
 
 
 class Location:
