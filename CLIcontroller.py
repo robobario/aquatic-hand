@@ -1,5 +1,6 @@
 from actions import Move
 from game import Game
+from snapshot_printer import snapshotToString
 
 __author__ = 'python'
 
@@ -36,14 +37,7 @@ class CliController:
             return None
 
     def display(self, outsnapshot):
-        hero = outsnapshot.hero
-        world = outsnapshot.worldsnap
-        arena = world.arena
-        print("#"*(len(arena.grid[0]) +2))
-        for row in arena.grid:
-            print("#" + " "*len(row)+"#")
-        print("#"*(len(arena.grid) +2))
-        print("HP: " + str(hero.hp) + ", Strength: " + str(hero.strength))
+        print(snapshotToString(outsnapshot))
 
 
 
