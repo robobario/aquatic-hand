@@ -54,7 +54,7 @@ class World:
         self.npcaction(append)
         self.spawnMobs(append)
         self.checkdeaths(append)
-        return self.snapshot()
+        return log
 
     def pcaction(self, who, action, log):
         action.act(who, self, log)
@@ -86,7 +86,7 @@ class World:
                 log(who.name + " moved " + direction)
             elif len(tolocation.characters) > 0:
                 who.attack(tolocation.characters[0])
-                log(who.name + " attacket " + tolocation.characters.name)
+                log(who.name + " attacket " + tolocation.characters[0].name)
 
 
 
