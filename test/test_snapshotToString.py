@@ -26,7 +26,7 @@ class TestSnapshotToString(TestCase):
         location.additem(man)
         snapshot = Snapshot(WorldSnapshot(arena), man)
         stringed = snapshotToString(snapshot)
-        expected = "###\n#0#\n###\nHP: 100, Strength: 10"
+        expected = "###\n#\u263A#\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected,stringed)
 
     def test_snapshotWithCat(self):
