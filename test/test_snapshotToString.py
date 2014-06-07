@@ -15,6 +15,9 @@ class TestSnapshotToString(TestCase):
         expected = "###\n# #\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected,stringed)
 
+    def test_emptyArena(self):
+        snapshot = Snapshot(WorldSnapshot(Arena(0,0)), Pc())
+        self.assertRaises(Exception, lambda: snapshotToString(snapshot))
+
     def test_snapshotNone(self):
-        stringed = snapshotToString(None)
-        self.assertIsNone(stringed)
+        self.assertRaises(Exception, lambda: snapshotToString(None))
