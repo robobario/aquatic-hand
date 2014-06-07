@@ -3,7 +3,7 @@ from spacial import Point
 
 __author__ = 'python'
 
-drection = {
+directions = {
     "up": Point(-1, 0),
     "down": Point(1, 0),
     "left": Point(0, -1),
@@ -42,4 +42,12 @@ class World:
 
     def move(self, who, direction):
         point = self.arena.findcharacter(who)
+        pointto = point.add(directions[direction])
+        moveto = self.arena.getlocation(pointto)
+        if not moveto.contains:
+            self.arena.moveactor(who, pointto)
+
+
+
+
 

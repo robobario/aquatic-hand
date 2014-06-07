@@ -21,6 +21,10 @@ class Arena:
                 if character in y:
                     return Point(x, y)
 
+    def moveitem(self, item, pointto):
+        self.getlocation(self.findcharacter(item)).removeitem(item)
+        self.grid[pointto.x, pointto.y].additem(item)
+
 
 class Location:
     def __init__(self):
@@ -28,3 +32,10 @@ class Location:
 
     def __contains__(self, item):
         return item in self.contains
+
+    def additem(self, item):
+        self.contains.append(item)
+
+    def removeitem(self, item):
+        if item in self:
+            self.contains.remove(item)
