@@ -37,7 +37,14 @@ class CliController:
 
     def display(self, outsnapshot):
         hero = outsnapshot.hero
+        world = outsnapshot.worldsnap
+        arena = world.arena
+        print("#"*(len(arena.grid[0]) +2))
+        for row in arena.grid:
+            print("#" + " "*len(row)+"#")
+        print("#"*(len(arena.grid) +2))
         print("HP: " + str(hero.hp) + ", Strength: " + str(hero.strength))
+
 
 
 if __name__ == '__main__':
