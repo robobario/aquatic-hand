@@ -23,11 +23,18 @@ def snapshotToString(snapshot):
     return result
 
 
+def symbolForLocation(location):
+    first = location.characters[0]
+    if "cat" in first.types:
+        return "x"
+    return '0'
+
+
 def printRow(row):
     result = ""
     for location in row:
         if len(location) > 0:
-            result += '0'
+            result += symbolForLocation(location)
         else:
             result += ' '
     return result
