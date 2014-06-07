@@ -1,7 +1,14 @@
 from arena import Arena
+from spacial import Point
 
 __author__ = 'python'
 
+drection = {
+    "up": Point(-1, 0),
+    "down": Point(1, 0),
+    "left": Point(0, -1),
+    "right": Point(0, 1)
+}
 
 class WorldSnapshot:
     def __init__(self, arena):
