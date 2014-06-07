@@ -3,6 +3,7 @@ from arena import Arena
 from game import Snapshot
 from pc import Pc
 from snapshot_printer import snapshotToString
+from spacial import Point
 from world import WorldSnapshot
 
 __author__ = 'python'
@@ -13,6 +14,16 @@ class TestSnapshotToString(TestCase):
         snapshot = Snapshot(WorldSnapshot(Arena(1,1)), Pc())
         stringed = snapshotToString(snapshot)
         expected = "###\n# #\n###\nHP: 100, Strength: 10"
+        self.assertEqual(expected,stringed)
+
+    def test_snapshotWithDude(self):
+        arena = Arena(1, 1)
+        location = arena.getlocation(Point(0,0))
+        man = Pc()
+        location.additem(man)
+        snapshot = Snapshot(WorldSnapshot(arena), man)
+        stringed = snapshotToString(snapshot)
+        expected = "###\n#0#\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected,stringed)
 
     def test_emptyArena(self):

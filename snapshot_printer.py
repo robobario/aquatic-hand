@@ -23,11 +23,21 @@ def snapshotToString(snapshot):
     return result
 
 
+def printRow(row):
+    result = ""
+    for location in row:
+        if len(location) > 0:
+            result += '0'
+        else:
+            result += ' '
+    return result
+
+
 def printGrid(arena):
     result = ""
     result += "#" * (len(arena.grid[0]) + 2) + "\n"
     for row in arena.grid:
-        result += "#" + " " * len(row) + "#" + "\n"
+        result += "#" + printRow(row) + "#" + "\n"
     result += "#" * (len(arena.grid) + 2) + "\n"
     return result
 

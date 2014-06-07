@@ -33,6 +33,9 @@ class Location:
     def __contains__(self, item):
         return item in self.contains
 
+    def __len__(self):
+        return len(self.contains)
+
     def additem(self, item):
         self.contains.append(item)
 

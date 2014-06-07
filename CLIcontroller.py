@@ -21,6 +21,14 @@ class CliController:
     def __init__(self):
         self.game = Game()
 
+    def main(self):
+        self.display(self.game.snapshot())
+        while self.game.isActive():
+            try:
+                self.readActPrint()
+            except Exception as e:
+                logging.exception(e)
+
     def readActPrint(self):
         instr = self.getinput()
         action = self.translate(instr)
@@ -29,14 +37,6 @@ class CliController:
             self.display(outsnapshot)
         else:
             print("bad input")
-
-    def main(self):
-        self.display(self.game.snapshot())
-        while self.game.isActive():
-            try:
-                self.readActPrint()
-            except Exception as e:
-                logging.exception(e)
 
     def getinput(self):
         return input("what do? ololo\n")
