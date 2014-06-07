@@ -8,15 +8,6 @@ class WorldSnapshot:
         pass
 
 
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def add(self, point):
-        return Point(self.x)
-
-
 class World:
     def __init__(self):
         self.pcs = []
@@ -43,5 +34,5 @@ class World:
         return WorldSnapshot(self.arena)
 
     def move(self, who, direction):
-        pass
+        point = self.arena.findcharacter(who)
 

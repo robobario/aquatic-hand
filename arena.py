@@ -1,3 +1,5 @@
+from spacial import Point
+
 __author__ = 'python'
 
 
@@ -8,13 +10,19 @@ class Arena:
             row = []
             self.grid.append(row)
             for j in range(width):
-                row.append(location())
+                row.append(Location())
 
     def getlocation(self, point):
         return self.grid[point.x][point.y]
 
+    def findcharacter(self, character):
+        for x in self.grid:
+            for y in self.grid[x]:
+                if character in self.grid[x][y]:
+                    return Point(x, y)
 
-class location:
+
+class Location:
     def __init__(self):
         self.contains = []
 
