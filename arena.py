@@ -17,7 +17,7 @@ class Arena:
 
     def findcharacter(self, character):
         for x in self.grid:
-            for y in self.grid[x]:
+            for y in x:
                 if character in self.grid[x][y]:
                     return Point(x, y)
 
