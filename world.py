@@ -43,8 +43,7 @@ class World:
     def move(self, who, direction):
         point = self.arena.findcharacter(who)
         pointto = point.add(directions[direction])
-        moveto = self.arena.getlocation(pointto)
-        if not moveto.contains:
+        if not self.arena.getlocation(pointto).contains:
             self.arena.moveitem(who, pointto)
 
 
