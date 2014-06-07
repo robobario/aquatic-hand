@@ -32,7 +32,7 @@ def symbolForLocation(location):
         type = first.types[0]
         if type in symbols:
             return symbols[type]
-    return '0'
+    return "\u263A"
 
 
 def printRow(row):
