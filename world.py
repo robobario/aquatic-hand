@@ -34,5 +34,5 @@ class World:
         return WorldSnapshot(self.arena)
 
     def move(self, who, direction):
-        pass
+        point = self.arena.findcharacter(who)
 
