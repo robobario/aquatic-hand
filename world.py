@@ -48,41 +48,45 @@ class World:
         location.additem(character)
 
     def attempt(self, who, action):
-        self.pcaction(who, action)
-        self.npcaction()
-        self.spawnMobs()
-        self.checkdeaths()
+        log = []
+        append = log.append
+        self.pcaction(who, action, append)
+        self.npcaction(append)
+        self.spawnMobs(append)
+        self.checkdeaths(append)
         return self.snapshot()
 
-    def pcaction(self, who, action):
-        action.act(who, self)
+    def pcaction(self, who, action, log):
+        action.act(who, self, log)
 
-    def npcaction(self):
+    def npcaction(self, log):
         for npc in self.npcs:
             action = npc.decide(self.arena)
             action.act(npc, self)
 
-    def checkdeaths(self):
+    def checkdeaths(self, log):
         for character in self.npcs + self.pcs:
             character.checkdead()
+
+    def spawnMobs(self, log):
+        mobs = self.genMobs(self.pcs)
+        for mob in mobs:
+            self.spawn(mob)
 
     def snapshot(self):
         return WorldSnapshot(self.arena)
 
-    def move(self, who, direction):
+    def move(self, who, direction, log):
         point = self.arena.findcharacter(who)
         to = point.add(directions[direction])
         tolocation = self.arena.getlocation(to)
         if self.arena.ingrid(to):
             if not tolocation.characters:
                 self.arena.moveitem(who, to)
+                log(who.name + " moved " + direction)
             elif len(tolocation.characters) > 0:
                 who.attack(tolocation.characters[0])
-
-    def spawnMobs(self):
-        mobs = self.genMobs(self.pcs)
-        for mob in mobs:
-            self.spawn(mob)
+                log(who.name + " attacket " + tolocation.characters.name)
 
 
 

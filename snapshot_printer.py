@@ -16,12 +16,20 @@ def getArena(snapshot):
     return arena
 
 
+def printLog(log):
+    if log:
+        return "\n".join(log) + "\n"
+    else:
+        return ""
+
+
 def snapshotToString(snapshot):
     if snapshot is None:
         raise Exception('snapshot is none')
     arena = getArena(snapshot)
     result = printGrid(arena)
     hero = snapshot.hero
+    result += printLog(snapshot.log)
     result += printHero(hero)
     return result
 
