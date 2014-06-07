@@ -31,17 +31,17 @@ class Arena:
 
 class Location:
     def __init__(self):
-        self.contains = []
+        self.characters = []
 
     def __contains__(self, item):
-        return item in self.contains
+        return item in self.characters
 
     def __len__(self):
-        return len(self.contains)
+        return len(self.characters)
 
     def additem(self, item):
-        self.contains.append(item)
+        self.characters.append(item)
 
     def removeitem(self, item):
         if item in self:
-            self.contains.remove(item)
+            self.characters.remove(item)

@@ -46,7 +46,7 @@ class World:
     def move(self, who, direction):
         point = self.arena.findcharacter(who)
         pointto = point.add(directions[direction])
-        if not self.arena.getlocation(pointto).contains and self.arena.ingrid(pointto):
+        if not self.arena.getlocation(pointto).characters and self.arena.ingrid(pointto):
             self.arena.moveitem(who, pointto)
 
     def spawnMobs(self):
