@@ -10,13 +10,25 @@ class Character:
         self.alive = True
         self.name = name
         self.types = []
+        self.inventory = []
+
+    def __str__(self):
+        return self.name
 
     def attack(self, enemy):
         enemy.hp -= self.strength
 
-    def checkdead(self):
+    def checkalive(self):
         if self.hp <= 0:
             self.alive = False
+        return self.alive
+
+    def kill(self):
+        self.hp = -10
+
+    def pickup(self, item):
+        self.inventory.append(item)
+        return item
 
 
 class Npc(Character):

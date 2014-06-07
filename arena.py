@@ -21,6 +21,17 @@ class Arena:
                 if character in self.grid[x][y]:
                     return Point(x, y)
 
+    def getallcharacter(self):
+        allcharacters = []
+        for x in self.grid:
+            for y in x:
+                for z in y.characters:
+                    allcharacters.append(z)
+        return allcharacters
+
+    def findcharacterlocation(self, character):
+        return self.getlocation(self.findcharacter(character))
+
     def moveitem(self, item, to):
         self.getlocation(self.findcharacter(item)).removeitem(item)
         self.grid[to.x][to.y].additem(item)
@@ -32,6 +43,7 @@ class Arena:
 class Location:
     def __init__(self):
         self.characters = []
+        self.items = []
 
     def __contains__(self, item):
         return item in self.characters
@@ -45,3 +57,6 @@ class Location:
     def removeitem(self, item):
         if item in self:
             self.characters.remove(item)
+
+    def killcharacter(self, character):
+        self.items.append(self.characters.pop(self.characters.index(character)))

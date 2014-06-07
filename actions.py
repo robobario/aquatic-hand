@@ -8,6 +8,12 @@ class Move:
     def act(self, who, world, log):
         world.move(who, self.direction, log)
 
+class PickUp:
+    def __init__(self):
+        pass
+
+    def act(self, who, world, log):
+        world.pickup(who, log)
 
 class Rest:
     def act(self, who, world, log):

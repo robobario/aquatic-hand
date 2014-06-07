@@ -65,8 +65,9 @@ class World:
             action.act(npc, self, log)
 
     def checkdeaths(self, log):
-        for character in self.npcs + self.pcs:
-            character.checkdead()
+        for character in self.arena.getallcharacter():
+            if not character.checkalive():
+                self.arena.findcharacterlocation(character).killcharacter(character)
 
     def spawnMobs(self, log):
         mobs = self.genMobs(self.pcs)
@@ -88,6 +89,11 @@ class World:
             elif len(tolocation.characters) > 0:
                 who.attack(tolocation.characters[0])
                 log(who.name + " attacket " + tolocation.characters[0].name)
+
+    def pickup(self, who, log):
+        location = self.arena.findcharacterlocation(who)
+        item = who.pickup(location.items.pop())
+        log(who.name + " picks up " + str(item))
 
 
 
