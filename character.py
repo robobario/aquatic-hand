@@ -83,3 +83,4 @@ class Npc(Character):
 class Pc(Character):
     def __init__(self):
         super().__init__()
+        self.types.append("hero")

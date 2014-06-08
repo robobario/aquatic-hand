@@ -88,9 +88,11 @@ class World:
             if not tolocation.characters:
                 self.arena.moveitem(who, to)
                 log(who.name + " moved " + direction)
-            elif len(tolocation.characters) > 0:
+            elif len(tolocation.characters) > 0 and who.types[0] not in tolocation.characters:
                 who.attack(tolocation.characters[0])
-                log(who.name + " attacket " + tolocation.characters[0].name)
+                log(who.name + " attacked " + tolocation.characters[0].name)
+            else:
+                log(who.name + " can't move " + direction)
 
     def pickup(self, who, log):
         location = self.arena.findcharacterlocation(who)
