@@ -97,6 +97,8 @@ class World:
                 log(who.name + " attacked " + tolocation.characters[0].name)
             else:
                 log(who.name + " can't move " + direction)
+        for item in self.arena.findcharacterlocation(who).items:
+            log("You see a " + str(item) + " here.")
 
     def pickup(self, who, log):
         location = self.arena.findcharacterlocation(who)

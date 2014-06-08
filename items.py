@@ -1,7 +1,7 @@
 __author__ = 'python'
 
 class Item:
-    def __init__(self, name = "Bone"):
+    def __init__(self, name = "bone"):
         self.name = name
         self.description = "A nondescript item"
         self.power = []
