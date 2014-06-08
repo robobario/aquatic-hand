@@ -1,6 +1,7 @@
 import random
 
 from character import Npc
+from items import ScimatarRune
 
 
 __author__ = 'python'
@@ -22,5 +23,6 @@ class Cat(Npc):
         self.hp = 10
         self.strength = 2
         self.types.append("cat")
+        self.inventory.append(ScimatarRune())
 
     pass

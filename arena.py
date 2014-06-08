@@ -59,4 +59,5 @@ class Location:
             self.characters.remove(item)
 
     def killcharacter(self, character):
-        self.items.append(self.characters.pop(self.characters.index(character)))
+        self.items.append(character.itemdrop())
+        self.removeitem(character)

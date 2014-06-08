@@ -1,4 +1,6 @@
+import random
 import actions
+from items import Item
 from spacial import Point
 
 __author__ = 'python'
@@ -10,7 +12,7 @@ class Character:
         self.alive = True
         self.name = name
         self.types = []
-        self.inventory = []
+        self.inventory = [Item()]
 
     def __str__(self):
         return self.name
@@ -29,6 +31,9 @@ class Character:
     def pickup(self, item):
         self.inventory.append(item)
         return item
+
+    def itemdrop(self):
+        return self.inventory[random.randint(0, len(self.inventory) - 1)]
 
 
 class Npc(Character):
