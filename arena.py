@@ -49,7 +49,7 @@ class Location:
         return item in self.characters
 
     def __len__(self):
-        return len(self.characters)
+        return len(self.characters + self.items)
 
     def additem(self, item):
         self.characters.append(item)
@@ -61,3 +61,10 @@ class Location:
     def killcharacter(self, character):
         self.items.append(character.itemdrop())
         self.removeitem(character)
+
+    def getprintitem(self):
+        if len(self.characters) > 0:
+            return self.characters[0]
+        elif len(self.items) > 0:
+            return self.items[0]
+        return False

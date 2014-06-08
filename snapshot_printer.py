@@ -1,7 +1,9 @@
 __author__ = 'python'
 
 symbols = {
-    "cat": "x"
+    "cat": "x",
+    "basic": "\'",
+    "fancy": "*"
 }
 
 def getArena(snapshot):
@@ -35,9 +37,9 @@ def snapshotToString(snapshot):
 
 
 def symbolForLocation(location):
-    first = location.characters[0]
-    if first.types:
-        type = first.types[0]
+    printitem = location.getprintitem()
+    if printitem:
+        type = printitem.types[0]
         if type in symbols:
             return symbols[type]
     return "\u263A"
