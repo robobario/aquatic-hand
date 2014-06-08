@@ -8,10 +8,14 @@ from spacial import Point
 __author__ = 'python'
 
 directions = {
-    "up": Point(-1, 0),
-    "down": Point(1, 0),
-    "left": Point(0, -1),
-    "right": Point(0, 1)
+    "N": Point(-1, 0),
+    "S": Point(1, 0),
+    "W": Point(0, -1),
+    "E": Point(0, 1),
+    "NE": Point(-1, 1),
+    "NW": Point(-1, -1),
+    "SE": Point(1, 1),
+    "SW": Point(1, -1)
 }
 
 

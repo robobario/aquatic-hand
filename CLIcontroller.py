@@ -10,10 +10,14 @@ __author__ = 'python'
 logging.basicConfig(level=logging.DEBUG)
 
 actions = {
-    "up": Move("up"),
-    "down": Move("down"),
-    "left": Move("left"),
-    "right": Move("right")
+    "up": Move("N"),
+    "down": Move("S"),
+    "left": Move("W"),
+    "right": Move("E"),
+    "upright": Move("NE"),
+    "upleft": Move("NW"),
+    "downright": Move("SE"),
+    "downleft": Move("SW"),
 }
 
 

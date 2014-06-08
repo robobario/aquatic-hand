@@ -63,13 +63,13 @@ class Npc(Character):
         diffX = abs(currX - toX)
         diffY = abs(currY - toY)
         if (diffX == 0 or diffX <= diffY) and currY - toY > 0:
-            return actions.Move("left")
+            return actions.Move("W")
         elif (diffX == 0 or diffX <= diffY) and currY - toY <= 0:
-            return actions.Move("right")
+            return actions.Move("E")
         elif (diffY == 0 or diffX >= diffY) and currX - toX > 0:
-            return actions.Move("up")
+            return actions.Move("N")
         elif (diffY == 0 or diffX >= diffY) and currX - toX <= 0:
-            return actions.Move("down")
+            return actions.Move("S")
 
     def decide(self, arena):
         point = arena.findcharacter(self)

@@ -15,16 +15,16 @@ class TestWorld(TestCase):
         man = Pc()
         world.arena.getlocation(Point(1, 5)).additem(man)
         self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(1, 5).gettuple())
-        world.move(man, 'right', lambda x: x)
+        world.move(man, 'E', lambda x: x)
         self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(1, 6).gettuple())
-        world.move(man, 'up', lambda x: x)
+        world.move(man, 'N', lambda x: x)
         self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(0, 6).gettuple())
 
     def test_move_edgecase(self):
         world = World()
         man = Pc()
         world.arena.getlocation(Point(11, 11)).additem(man)
-        world.move(man, 'right', lambda x: x)
+        world.move(man, 'E', lambda x: x)
         self.assertEqual(world.arena.findcharacter(man).gettuple(), Point(11, 11).gettuple())
 
     def test_death(self):
@@ -34,7 +34,7 @@ class TestWorld(TestCase):
         location = world.arena.findcharacterlocation(man)
         location.characters[0].kill()
         loc = world.arena.findcharacter(man)
-        world.attempt(man, Move('right'))
+        world.attempt(man, Move('E'))
         self.assertEqual(False, man.alive)
         self.assertEqual(0, len(world.pcs))
         if world.arena.ingrid(loc.add(Point(0, 1))):
@@ -50,8 +50,8 @@ class TestWorld(TestCase):
         kitty = Npc('cat')
         world.arena.getlocation(Point(5, 7)).additem(kitty)
         kitty.kill()
-        world.attempt(man, Move('right'))
-        world.attempt(man, Move('right'))
+        world.attempt(man, Move('E'))
+        world.attempt(man, Move('E'))
         world.pickup(man, lambda x: x)
 
 
