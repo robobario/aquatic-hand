@@ -1,5 +1,6 @@
 from unittest import TestCase
 from arena import Location
+from items import Bone
 
 __author__ = 'python'
 
@@ -11,3 +12,10 @@ class TestLocation(TestCase):
         self.assertIn('asdf', location)
         location.removeitem('asdf')
         self.assertNotIn('asdf', location)
+
+    def test_printitem(self):
+        location = Location()
+        bone = Bone()
+        location.additem(bone)
+        self.assertEquals(bone, location.getprintitem())
+

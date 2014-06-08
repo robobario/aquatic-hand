@@ -1,6 +1,6 @@
 import logging
 
-from actions import Move
+from actions import Move, PickUp
 from game import Game
 from snapshot_printer import snapshotToString
 
@@ -18,6 +18,7 @@ actions = {
     "upleft": Move("NW"),
     "downright": Move("SE"),
     "downleft": Move("SW"),
+    "pickup": PickUp()
 }
 
 

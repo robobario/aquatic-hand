@@ -1,6 +1,6 @@
 import random
 import actions
-from items import Item
+from items import Item, Bone
 from spacial import Point
 
 __author__ = 'python'
@@ -12,7 +12,7 @@ class Character:
         self.alive = True
         self.name = name
         self.types = []
-        self.inventory = [Item()]
+        self.inventory = []
 
     def __str__(self):
         return self.name
@@ -33,8 +33,12 @@ class Character:
         return item
 
     def itemdrop(self):
-        return self.inventory[random.randint(0, len(self.inventory) - 1)]
+        return random.choice(self.inventory)
 
+    def useitem(self, item):
+        for power in item.powers:
+            print(power)
+            setattr(self, power, getattr(self, power) + item.powers[power])
 
 class Npc(Character):
     def __init__(self, name):
@@ -89,3 +93,4 @@ class Pc(Character):
     def __init__(self):
         super().__init__()
         self.types.append("hero")
+        self.inventory.append(Bone())

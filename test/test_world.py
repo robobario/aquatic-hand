@@ -1,7 +1,9 @@
 from unittest import TestCase
 
 from actions import Move
-from character import Pc, Npc
+from bestiary import Cat
+from character import Pc
+from items import Bone
 from spacial import Point
 from world import World
 
@@ -43,11 +45,12 @@ class TestWorld(TestCase):
     def test_pickup(self):
         world = World()
         man = Pc()
+        key = Bone()
         world.arena.getlocation(Point(5, 5)).additem(man)
-        world.arena.getlocation(Point(5, 5)).items.append('key')
+        world.arena.getlocation(Point(5, 5)).items.append(key)
         world.pickup(man, lambda x: x)
         self.assertGreater(len(man.inventory), 0)
-        kitty = Npc('cat')
+        kitty = Cat()
         world.arena.getlocation(Point(5, 7)).additem(kitty)
         kitty.kill()
         world.attempt(man, Move('E'))
