@@ -68,6 +68,8 @@ class World:
         for character in self.arena.getallcharacter():
             if not character.checkalive():
                 self.arena.findcharacterlocation(character).killcharacter(character)
+                if character in self.npcs:
+                    self.npcs.remove(character)
 
     def spawnMobs(self, log):
         mobs = self.genMobs(self.pcs)
