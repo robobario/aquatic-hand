@@ -60,11 +60,12 @@ class World:
         self.checkdeaths(append)
         return log
 
-    def query(self, query):
+    def query(self, who, query):
         log = []
         append = log.append
-        if query.where = 'inventory':
-            return 'asdf'
+        append('You have \n')
+        append(', \n'.join(who.inventory))
+
 
     def pcaction(self, who, action, log):
         action.act(who, self, log)
