@@ -1,30 +1,30 @@
 import logging
 
-from actions import Move, PickUp
-from game import Game
-from snapshot_printer import snapshotToString
+import actions
+import game
+import snapshot_printer
 
 
 __author__ = 'python'
 
 logging.basicConfig(level=logging.DEBUG)
 
-actions = {
-    "up": Move("N"),
-    "down": Move("S"),
-    "left": Move("W"),
-    "right": Move("E"),
-    "upright": Move("NE"),
-    "upleft": Move("NW"),
-    "downright": Move("SE"),
-    "downleft": Move("SW"),
-    "pickup": PickUp()
+stringToAction = {
+    "up": actions.Move("N"),
+    "down": actions.Move("S"),
+    "left": actions.Move("W"),
+    "right": actions.Move("E"),
+    "upright": actions.Move("NE"),
+    "upleft": actions.Move("NW"),
+    "downright": actions.Move("SE"),
+    "downleft": actions.Move("SW"),
+    "pickup": actions.PickUp()
 }
 
 
 class CliController:
     def __init__(self):
-        self.game = Game()
+        self.game = game.Game()
 
     def main(self):
         self.display(self.game.snapshot())
@@ -47,13 +47,13 @@ class CliController:
         return input("what do? ololo\n")
 
     def translate(self, instr):
-        if instr in actions:
-            return actions[instr]
+        if instr in stringToAction:
+            return stringToAction[instr]
         else:
             return None
 
     def display(self, outsnapshot):
-        print(snapshotToString(outsnapshot))
+        print(snapshot_printer.snapshotToString(outsnapshot))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import random
 
-from character import Npc
+import character
 import items
 
 
@@ -17,12 +17,12 @@ class Bestiary:
             mobs.append(Cat())
         return mobs
 
-class Cat(Npc):
+
+class Cat(character.Npc):
     def __init__(self):
         super().__init__("cat")
         self.hp = 10
         self.strength = 2
         self.types.append("cat")
         self.inventory.extend([items.MeatRune(), items.ScimatarRune(), items.Bone()])
-
     pass

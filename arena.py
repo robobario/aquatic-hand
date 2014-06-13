@@ -1,7 +1,7 @@
 import copy
 import random
 
-from spatial import Point
+import spatial
 
 
 __author__ = 'python'
@@ -26,7 +26,7 @@ class Arena:
         for x in range(len(self.grid)):
             for y in range(len(self.grid[x])):
                 if character in self.grid[x][y]:
-                    return Point(x, y)
+                    return spatial.Point(x, y)
 
     def getallcharacter(self):
         allcharacters = []
@@ -53,7 +53,7 @@ class Arena:
         def attempt(depth):
             if depth > 5:
                 return None
-            point = Point(self.rng() % self.width, self.rng() % self.height)
+            point = spatial.Point(self.rng() % self.width, self.rng() % self.height)
             if not self.getlocation(point).characters:
                 return point
             else:

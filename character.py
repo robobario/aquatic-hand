@@ -1,8 +1,8 @@
 import random
 
 import actions
-from items import Bone
-from spatial import Point
+import items
+import spatial
 
 
 __author__ = 'python'
@@ -56,7 +56,7 @@ class Npc(Character):
                         distance = abs(i - point.x) + abs(j - point.y)
                         if distance < minDist:
                             minDist = distance
-                            nearest = Point(i, j)
+                            nearest = spatial.Point(i, j)
         return nearest
 
     def targetsAny(self, characters):
@@ -95,4 +95,4 @@ class Pc(Character):
     def __init__(self):
         super().__init__()
         self.types.append("hero")
-        self.inventory.append(Bone())
+        self.inventory.append(items.Bone())
