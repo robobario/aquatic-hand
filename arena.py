@@ -39,6 +39,15 @@ class Arena:
     def findcharacterlocation(self, character):
         return self.getlocation(self.findcharacter(character))
 
+
+    def find(self, character_id):
+        for x in range(len(self.grid)):
+            for y in range(len(self.grid[x])):
+                for char in self.grid[x][y].characters:
+                    if char.id == character_id:
+                        return char
+        return None
+
     def moveitem(self, item, to):
         self.getlocation(self.findcharacter(item)).removeitem(item)
         self.grid[to.x][to.y].additem(item)

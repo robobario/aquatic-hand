@@ -7,6 +7,14 @@ import spatial
 
 __author__ = 'python'
 
+char_id = 1
+
+
+def next_id():
+    global char_id
+    char_id = char_id + 1
+    return char_id
+
 
 class Character:
     def __init__(self, name="Manborg"):
@@ -16,14 +24,10 @@ class Character:
         self.name = name
         self.types = []
         self.inventory = []
+        self.id = next_id()
 
     def __eq__(self, other):
-        return self.hp == other.hp \
-               and self.strength == other.strength \
-               and self.alive == other.alive \
-               and self.name == other.name \
-               and self.types == other.types \
-               and self.inventory == other.inventory
+        return self.id == other.id
 
     def __str__(self):
         return self.name

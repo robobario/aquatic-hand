@@ -33,9 +33,9 @@ class World:
         self.bestiary = bestiary.Bestiary()
         self.genMobs = self.bestiary.get_random_mobs
 
-    def attempt(self, who, action):
+    def attempt(self, hero_id, action):
         new_state = copy.deepcopy(self.current)
-        log = do_attempt(self.genMobs, new_state, who, action)
+        log = do_attempt(self.genMobs, new_state, hero_id, action)
         self.current = new_state
         return log
 
@@ -43,10 +43,10 @@ class World:
         return self.current
 
 
-def do_attempt(gen_mobs, snapshot, who, action):
+def do_attempt(gen_mobs, snapshot, hero_id, action):
     log = []
     append = log.append
-    pc_action(snapshot, who, action, append)
+    pc_action(snapshot, hero_id, action, append)
     npc_action(snapshot, append)
     mobs = gen_mobs(snapshot.pcs)
     spawn_mobs(snapshot, mobs)
@@ -62,14 +62,14 @@ def check_deaths(snapshot):
                 snapshot.npcs.remove(character)
 
 
-def pc_action(snapshot, who, action, log):
-    action.act(who, snapshot, log)
+def pc_action(snapshot, hero_id, action, log):
+    action.act(hero_id, snapshot, log)
 
 
 def npc_action(snapshot, log):
     for npc in snapshot.npcs:
         action = npc.decide(snapshot.arena)
-        action.act(npc, snapshot, log)
+        action.act(npc.id, snapshot, log)
 
 
 def spawn_mobs(snapshot, mobs):
@@ -83,7 +83,8 @@ def spawn(snapshot, character):
     location.additem(character)
 
 
-def move(snapshot, who, direction, log):
+def move(snapshot, hero_id, direction, log):
+    who = snapshot.arena.find(hero_id)
     point = snapshot.arena.findcharacter(who)
     to = point.add(directions[direction])
     if snapshot.arena.ingrid(to):
@@ -100,7 +101,8 @@ def move(snapshot, who, direction, log):
         log("You see a " + str(item) + " here.")
 
 
-def pickup(snapshot, who, log):
+def pickup(snapshot, hero_id, log):
+    who = snapshot.arena.find(hero_id)
     location = snapshot.arena.findcharacterlocation(who)
     item = who.pickup(location.items.pop())
     log(who.name + " picks up " + str(item))
