@@ -66,13 +66,13 @@ def check_deaths(snapshot):
 
 
 def pc_action(snapshot, hero_id, action, log):
-    action.act(hero_id, snapshot, log)
+    action.act(hero_id, snapshot, log, callback())
 
 
 def npc_action(snapshot, log):
     for npc in snapshot.npcs:
         action = npc.decide(snapshot.arena)
-        action.act(npc.id, snapshot, log)
+        action.act(npc.id, snapshot, log, callback())
 
 
 def spawn_mobs(snapshot, mobs):
@@ -85,6 +85,16 @@ def spawn(snapshot, character):
     location = snapshot.arena.get_location(snapshot.arena.random_unoccupied_point())
     location.additem(character)
 
+
+class Object(object):
+    pass
+
+
+def callback():
+    x = Object()
+    x.move = move
+    x.pickup = pickup
+    return x
 
 def move(snapshot, hero_id, direction, log):
     who = snapshot.arena.find(hero_id)
