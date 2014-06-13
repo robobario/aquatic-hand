@@ -1,4 +1,5 @@
 import copy
+import random
 
 from spatial import Point
 
@@ -11,6 +12,7 @@ class Arena:
         self.grid = []
         self.width = width
         self.height = height
+        self.rng = lambda: random.randint(1, 100)
         for x in range(height):
             row = []
             self.grid.append(row)
@@ -46,6 +48,18 @@ class Arena:
 
     def copy(self):
         return copy.deepcopy(self)
+
+    def randomUnoccupiedPoint(self):
+        def attempt(depth):
+            if depth > 5:
+                return None
+            point = Point(self.rng() % self.width, self.rng() % self.height)
+            if not self.getlocation(point).characters:
+                return point
+            else:
+                return attempt(depth + 1)
+
+        return attempt(0)
 
 class Location:
     def __init__(self):

@@ -34,20 +34,8 @@ class World:
         self.genMobs = self.bestiary.getRandomMobs
         self.rng = lambda: random.randint(1, 100)
 
-    def randomUnoccupiedPoint(self):
-        def attempt(depth):
-            if depth > 5:
-                return None
-            point = Point(self.rng() % self.current.arena.width, self.rng() % self.current.arena.height)
-            if not self.current.arena.getlocation(point).characters:
-                return point
-            else:
-                return attempt(depth + 1)
-
-        return attempt(0)
-
     def spawn(self, snapshot, character):
-        location = snapshot.arena.getlocation(self.randomUnoccupiedPoint())
+        location = snapshot.arena.getlocation(snapshot.arena.randomUnoccupiedPoint())
         location.additem(character)
 
     def attempt(self, snapshot, who, action):
@@ -55,7 +43,8 @@ class World:
         append = log.append
         self.pcaction(snapshot, who, action, append)
         self.npcaction(snapshot, append)
-        self.spawnMobs(snapshot, append)
+        mobs = self.genMobs(snapshot.pcs)
+        self.spawnMobs(snapshot, append, mobs)
         self.checkdeaths(snapshot, append)
         return log
 
@@ -74,8 +63,7 @@ class World:
                 if character in snapshot.npcs:
                     snapshot.npcs.remove(character)
 
-    def spawnMobs(self, snapshot, log):
-        mobs = self.genMobs(snapshot.pcs)
+    def spawnMobs(self, snapshot, log, mobs):
         for mob in mobs:
             self.spawn(snapshot, mob)
             snapshot.npcs.append(mob)
