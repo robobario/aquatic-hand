@@ -1,4 +1,4 @@
-import random
+import copy
 
 from arena import Arena
 from bestiary import Bestiary
@@ -33,7 +33,6 @@ class World:
         self.arena = Arena(self.width, self.height)
         self.bestiary = Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
-        self.rng = lambda: random.randint(1, 100)
 
     def randomUnoccupiedPoint(self):
         def attempt(depth):
@@ -52,14 +51,25 @@ class World:
         location.additem(character)
 
     def attempt(self, who, action):
-        log = []
-        append = log.append
-        self.pcaction(who, action, append)
-        self.npcaction(append)
-        self.spawnMobs(append)
-        self.checkdeaths(append)
+        new_state = copy.deepcopy(self.current)
+        log = do_attempt(self.genMobs, new_state, who, action)
+        self.current = new_state
         return log
 
+    def snapshot(self):
+        return self.current
+
+
+def do_attempt(gen_mobs, snapshot, who, action):
+    log = []
+    append = log.append
+    pcaction(snapshot, who, action, append)
+    npcaction(snapshot, append)
+    mobs = gen_mobs(snapshot.pcs)
+    spawnMobs(snapshot, mobs)
+    checkdeaths(snapshot)
+    return log
+    
     def query(self, who, query):
         log = []
         append = log.append

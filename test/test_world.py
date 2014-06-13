@@ -5,7 +5,7 @@ from bestiary import Cat
 from character import Pc
 from items import Bone
 from spatial import Point
-from world import World
+from world import World, move, pickup
 
 
 __author__ = 'python'
@@ -17,22 +17,22 @@ class TestWorld(TestCase):
         man = Pc()
         world.current.arena.getlocation(Point(1, 5)).additem(man)
         self.assertEqual(world.current.arena.findcharacter(man).gettuple(), Point(1, 5).gettuple())
-        world.move(man, 'E', lambda x: x)
+        move(world.current, man, 'E', lambda x: x)
         self.assertEqual(world.current.arena.findcharacter(man).gettuple(), Point(1, 6).gettuple())
-        world.move(man, 'N', lambda x: x)
+        move(world.current, man, 'N', lambda x: x)
         self.assertEqual(world.current.arena.findcharacter(man).gettuple(), Point(0, 6).gettuple())
 
     def test_move_edgecase(self):
         world = World()
         man = Pc()
         world.current.arena.getlocation(Point(11, 11)).additem(man)
-        world.move(man, 'E', lambda x: x)
+        move(world.current, man, 'E', lambda x: x)
         self.assertEqual(world.current.arena.findcharacter(man).gettuple(), Point(11, 11).gettuple())
 
     def test_death(self):
         world = World()
         man = Pc()
-        world.spawn(man)
+        world.spawn(world.current, man)
         location = world.current.arena.findcharacterlocation(man)
         location.characters[0].kill()
         loc = world.current.arena.findcharacter(man)
@@ -48,14 +48,14 @@ class TestWorld(TestCase):
         key = Bone()
         world.current.arena.getlocation(Point(5, 5)).additem(man)
         world.current.arena.getlocation(Point(5, 5)).items.append(key)
-        world.pickup(man, lambda x: x)
+        pickup(world.current, man, lambda x: x)
         self.assertGreater(len(man.inventory), 0)
         kitty = Cat()
         world.current.arena.getlocation(Point(5, 7)).additem(kitty)
         kitty.kill()
         world.attempt(man, Move('E'))
         world.attempt(man, Move('E'))
-        world.pickup(man, lambda x: x)
+        pickup(world.current, man, lambda x: x)
 
 
 
