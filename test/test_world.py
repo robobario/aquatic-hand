@@ -4,7 +4,7 @@ from actions import Move
 from bestiary import Cat
 from character import Pc
 from items import Bone
-from spacial import Point
+from spatial import Point
 from world import World
 
 

@@ -1,7 +1,9 @@
 import random
+
 import actions
-from items import Item, Bone
-from spacial import Point
+from items import Bone
+from spatial import Point
+
 
 __author__ = 'python'
 

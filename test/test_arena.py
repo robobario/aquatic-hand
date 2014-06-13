@@ -1,6 +1,8 @@
 from unittest import TestCase
+
 from arena import Arena
-from spacial import Point
+from spatial import Point
+
 
 __author__ = 'python'
 

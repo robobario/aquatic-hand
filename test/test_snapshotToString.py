@@ -5,7 +5,7 @@ from bestiary import Cat
 from character import Pc
 from game import Snapshot
 from snapshot_printer import snapshotToString
-from spacial import Point
+from spatial import Point
 from world import WorldSnapshot
 
 
@@ -17,17 +17,17 @@ class TestSnapshotToString(TestCase):
         snapshot = Snapshot(WorldSnapshot(Arena(1, 1)), Pc(), [])
         stringed = snapshotToString(snapshot)
         expected = "###\n# #\n###\nHP: 100, Strength: 10"
-        self.assertEqual(expected,stringed)
+        self.assertEqual(expected, stringed)
 
     def test_snapshotWithDude(self):
         arena = Arena(1, 1)
-        location = arena.getlocation(Point(0,0))
+        location = arena.getlocation(Point(0, 0))
         man = Pc()
         location.additem(man)
         snapshot = Snapshot(WorldSnapshot(arena), man, [])
         stringed = snapshotToString(snapshot)
         expected = "###\n#\u263A#\n###\nHP: 100, Strength: 10"
-        self.assertEqual(expected,stringed)
+        self.assertEqual(expected, stringed)
 
     def test_snapshotWithCat(self):
         arena = Arena(1, 1)

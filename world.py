@@ -2,7 +2,7 @@ import random
 
 from arena import Arena
 from bestiary import Bestiary
-from spacial import Point
+from spatial import Point
 
 
 __author__ = 'python'
