@@ -31,7 +31,7 @@ class World:
         an_arena = arena.Arena(12, 12)
         self.current = WorldSnapshot(an_arena)
         self.bestiary = bestiary.Bestiary()
-        self.genMobs = self.bestiary.getRandomMobs
+        self.genMobs = self.bestiary.get_random_mobs
 
     def attempt(self, who, action):
         new_state = copy.deepcopy(self.current)
@@ -56,7 +56,7 @@ def do_attempt(gen_mobs, snapshot, who, action):
 
 def check_deaths(snapshot):
     for character in snapshot.arena.getallcharacter():
-        if not character.checkalive():
+        if not character.check_alive():
             snapshot.arena.findcharacterlocation(character).killcharacter(character)
             if character in snapshot.npcs:
                 snapshot.npcs.remove(character)

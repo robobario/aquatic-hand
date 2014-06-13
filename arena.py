@@ -61,6 +61,7 @@ class Arena:
 
         return attempt(0)
 
+
 class Location:
     def __init__(self):
         self.characters = []
@@ -80,7 +81,7 @@ class Location:
             self.characters.remove(item)
 
     def killcharacter(self, character):
-        self.items.append(character.itemdrop())
+        self.items.append(character.item_drop())
         self.removeitem(character)
 
     def getprintitem(self):
