@@ -27,7 +27,10 @@ class Game:
         return Snapshot(snap, self.hero, log)
 
     def query(self, query):
-        log = self.world.query(self.hero, query)
+        log = ['You have: \n']
+        items = self.hero.inventory
+        for item in len(items):
+            log.append(item + ':' + str(items[item]) + '\,')
         snap = self.world.snapshot()
         return Snapshot(snap, self.hero, log)
 

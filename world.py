@@ -70,11 +70,7 @@ def do_attempt(gen_mobs, snapshot, who, action):
     checkdeaths(snapshot)
     return log
     
-    def query(self, who, query):
-        log = []
-        append = log.append
-        append('You have \n')
-        append(', \n'.join(who.inventory))
+
 
 
     def pcaction(self, who, action, log):
