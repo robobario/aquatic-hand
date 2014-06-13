@@ -20,22 +20,18 @@ directions = {
 
 
 class WorldSnapshot:
-    def __init__(self, arena):
+    def __init__(self, current_arena):
         self.pcs = []
         self.npcs = []
-        self.arena = arena
+        self.arena = current_arena
 
 
 class World:
     def __init__(self):
-        anArena = arena.Arena(12, 12)
-        self.current = WorldSnapshot(anArena)
+        an_arena = arena.Arena(12, 12)
+        self.current = WorldSnapshot(an_arena)
         self.bestiary = bestiary.Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
-
-    def spawn(self, snapshot, character):
-        location = snapshot.arena.getlocation(snapshot.arena.randomUnoccupiedPoint())
-        location.additem(character)
 
     def attempt(self, who, action):
         new_state = copy.deepcopy(self.current)
@@ -50,10 +46,10 @@ class World:
 def do_attempt(gen_mobs, snapshot, who, action):
     log = []
     append = log.append
-    pcaction(snapshot, who, action, append)
-    npcaction(snapshot, append)
+    pc_action(snapshot, who, action, append)
+    npc_action(snapshot, append)
     mobs = gen_mobs(snapshot.pcs)
-    spawnMobs(snapshot, mobs)
+    spawn_mobs(snapshot, mobs)
     checkdeaths(snapshot)
     return log
 
@@ -66,17 +62,17 @@ def checkdeaths(snapshot):
                 snapshot.npcs.remove(character)
 
 
-def pcaction(snapshot, who, action, log):
+def pc_action(snapshot, who, action, log):
     action.act(who, snapshot, log)
 
 
-def npcaction(snapshot, log):
+def npc_action(snapshot, log):
     for npc in snapshot.npcs:
         action = npc.decide(snapshot.arena)
         action.act(npc, snapshot, log)
 
 
-def spawnMobs(snapshot, mobs):
+def spawn_mobs(snapshot, mobs):
     for mob in mobs:
         spawn(snapshot, mob)
         snapshot.npcs.append(mob)
