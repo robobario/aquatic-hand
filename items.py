@@ -5,6 +5,12 @@ availablepowers = {"strength": 0,
 
 
 class Item:
+    def __eq__(self, other):
+        return self.name == other.name \
+               and self.description == other.description \
+               and self.powers == other.powers \
+               and self.types == other.types
+
     def __init__(self, name):
         self.name = name
         self.description = ""

@@ -1,4 +1,4 @@
-import random
+import copy
 
 import arena
 import bestiary
@@ -32,24 +32,30 @@ class World:
         self.current = WorldSnapshot(anArena)
         self.bestiary = bestiary.Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
-        self.rng = lambda: random.randint(1, 100)
 
     def spawn(self, snapshot, character):
         location = snapshot.arena.getlocation(snapshot.arena.randomUnoccupiedPoint())
         location.additem(character)
 
-    def attempt(self, snapshot, who, action):
-        log = []
-        append = log.append
-        pcaction(snapshot, who, action, append)
-        npcaction(snapshot, append)
-        mobs = self.genMobs(snapshot.pcs)
-        spawnMobs(snapshot, mobs)
-        checkdeaths(snapshot)
+    def attempt(self, who, action):
+        new_state = copy.deepcopy(self.current)
+        log = do_attempt(self.genMobs, new_state, who, action)
+        self.current = new_state
         return log
 
     def snapshot(self):
         return self.current
+
+
+def do_attempt(gen_mobs, snapshot, who, action):
+    log = []
+    append = log.append
+    pcaction(snapshot, who, action, append)
+    npcaction(snapshot, append)
+    mobs = gen_mobs(snapshot.pcs)
+    spawnMobs(snapshot, mobs)
+    checkdeaths(snapshot)
+    return log
 
 
 def checkdeaths(snapshot):

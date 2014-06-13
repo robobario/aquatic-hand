@@ -36,7 +36,7 @@ class TestWorld(TestCase):
         location = world.current.arena.findcharacterlocation(man)
         location.characters[0].kill()
         loc = world.current.arena.findcharacter(man)
-        world.attempt(world.current, man, Move('E'))
+        world.attempt(man, Move('E'))
         self.assertEqual(False, man.alive)
         self.assertEqual(0, len(world.current.pcs))
         if world.current.arena.ingrid(loc.add(Point(0, 1))):
@@ -53,8 +53,8 @@ class TestWorld(TestCase):
         kitty = Cat()
         world.current.arena.getlocation(Point(5, 7)).additem(kitty)
         kitty.kill()
-        world.attempt(world.current, man, Move('E'))
-        world.attempt(world.current, man, Move('E'))
+        world.attempt(man, Move('E'))
+        world.attempt(man, Move('E'))
         pickup(world.current, man, lambda x: x)
 
 
