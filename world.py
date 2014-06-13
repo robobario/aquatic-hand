@@ -28,9 +28,7 @@ class World:
     def __init__(self):
         self.pcs = []
         self.npcs = []
-        self.width = 12
-        self.height = 12
-        self.arena = Arena(self.width, self.height)
+        self.arena = Arena(12, 12)
         self.bestiary = Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
         self.rng = lambda: random.randint(1, 100)
@@ -39,7 +37,7 @@ class World:
         def attempt(depth):
             if depth > 5:
                 return None
-            point = Point(self.rng() % self.width, self.rng() % self.height)
+            point = Point(self.rng() % self.arena.width, self.rng() % self.arena.height)
             if not self.arena.getlocation(point).characters:
                 return point
             else:
