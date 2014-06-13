@@ -42,6 +42,9 @@ class World:
     def snapshot(self):
         return self.current
 
+    def spawn(self, hero):
+        spawn(self.current, hero)
+
 
 def do_attempt(gen_mobs, snapshot, hero_id, action):
     log = []
@@ -87,7 +90,7 @@ def move(snapshot, hero_id, direction, log):
     who = snapshot.arena.find(hero_id)
     point = snapshot.arena.find_character(who)
     to = point.add(directions[direction])
-    if snapshot.arena.ingrid(to):
+    if snapshot.arena.in_grid(to):
         to_location = snapshot.arena.get_location(to)
         if not to_location.characters:
             snapshot.arena.move_item(who, to)

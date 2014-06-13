@@ -51,7 +51,7 @@ class Arena:
         self.get_location(self.find_character(item)).removeitem(item)
         self.grid[to.x][to.y].additem(item)
 
-    def ingrid(self, point):
+    def in_grid(self, point):
         return 0 <= point.x < len(self.grid) and 0 <= point.y < len(self.grid[0])
 
     def copy(self):

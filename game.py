@@ -16,7 +16,7 @@ class Game:
         self.world = world.World()
         hero = character.Pc()
         self.hero_id = hero.id
-        world.spawn(self.world.current, hero)
+        self.world.spawn(hero)
         self.active = True
 
     def is_active(self):

@@ -41,7 +41,7 @@ class TestWorld(TestCase):
         new_man = the_world.current.arena.find(man.id)
         self.assertIsNone(new_man)
         self.assertEqual(0, len(the_world.current.pcs))
-        if the_world.current.arena.ingrid(loc.add(spatial.Point(0, 1))):
+        if the_world.current.arena.in_grid(loc.add(spatial.Point(0, 1))):
             self.assertGreater(len(the_world.current.arena.get_location(loc.add(spatial.Point(0, 1))).items), 0)
 
     def test_pickup(self):
