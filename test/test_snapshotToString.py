@@ -13,7 +13,7 @@ __author__ = 'python'
 
 
 class TestSnapshotToString(TestCase):
-    def test_snapshotWithDude(self):
+    def test_snapshot_with_dude(self):
         pc = Pc()
         arena = Arena(1, 1)
         arena.get_location(Point(0, 0)).additem(pc)
@@ -22,7 +22,7 @@ class TestSnapshotToString(TestCase):
         expected = "###\n#\u263A#\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected, stringed)
 
-    def test_snapshotWithCat(self):
+    def test_snapshot_with_cat(self):
         arena = Arena(1, 1)
         location = arena.get_location(Point(0, 0))
         cat = Cat()
@@ -32,7 +32,7 @@ class TestSnapshotToString(TestCase):
         expected = "###\n#x#\n###\nHP: 10, Strength: 2"
         self.assertEqual(expected, stringed)
 
-    def test_snapshotWithLog(self):
+    def test_snapshot_with_log(self):
         arena = Arena(1, 1)
         location = arena.get_location(Point(0, 0))
         cat = Cat()
@@ -43,9 +43,9 @@ class TestSnapshotToString(TestCase):
         expected = "###\n#x#\n###\n" + "\n".join(log) + "\nHP: 10, Strength: 2"
         self.assertEqual(expected, stringed)
 
-    def test_emptyArena(self):
+    def test_empty_arena(self):
         snapshot = Snapshot(WorldSnapshot(Arena(0, 0)), Pc(), [])
         self.assertRaises(Exception, lambda: snapshot_to_string(snapshot))
 
-    def test_snapshotNone(self):
+    def test_snapshot_none(self):
         self.assertRaises(Exception, lambda: snapshot_to_string(None))
