@@ -91,7 +91,7 @@ def move(snapshot, who, direction, log):
         if not to_location.characters:
             snapshot.arena.moveitem(who, to)
             log(who.name + " moved " + direction)
-        elif len(to_location.characters) > 0 and who.types[0] not in to_location.characters:
+        elif len(to_location.characters) > 0 and who.types[0] not in to_location.characters[0].types:
             who.attack(to_location.characters[0])
             log(who.name + " attacked " + to_location.characters[0].name)
         else:

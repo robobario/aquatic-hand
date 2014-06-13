@@ -15,14 +15,14 @@ class Game:
     def __init__(self):
         self.world = world.World()
         self.hero = character.Pc()
-        self.world.spawn(self.world.current, self.hero)
+        world.spawn(self.world.current, self.hero)
         self.active = True
 
     def isActive(self):
         return self.active
 
     def action(self, action):
-        log = self.world.attempt(self.world.current, self.hero, action)
+        log = self.world.attempt(self.hero, action)
         snap = self.world.snapshot()
         return Snapshot(snap, self.hero, log)
 
