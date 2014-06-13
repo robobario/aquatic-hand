@@ -46,61 +46,61 @@ class World:
 
         return attempt(0)
 
-    def spawn(self, character):
-        location = self.current.arena.getlocation(self.randomUnoccupiedPoint())
+    def spawn(self, snapshot, character):
+        location = snapshot.arena.getlocation(self.randomUnoccupiedPoint())
         location.additem(character)
 
-    def attempt(self, who, action):
+    def attempt(self, snapshot, who, action):
         log = []
         append = log.append
-        self.pcaction(who, action, append)
-        self.npcaction(append)
-        self.spawnMobs(append)
-        self.checkdeaths(append)
+        self.pcaction(snapshot, who, action, append)
+        self.npcaction(snapshot, append)
+        self.spawnMobs(snapshot, append)
+        self.checkdeaths(snapshot, append)
         return log
 
-    def pcaction(self, who, action, log):
-        action.act(who, self, log)
+    def pcaction(self, snapshot, who, action, log):
+        action.act(who, snapshot, self, log)
 
-    def npcaction(self, log):
-        for npc in self.current.npcs:
-            action = npc.decide(self.current.arena)
-            action.act(npc, self, log)
+    def npcaction(self, snapshot, log):
+        for npc in snapshot.npcs:
+            action = npc.decide(snapshot.arena)
+            action.act(npc, snapshot, self, log)
 
-    def checkdeaths(self, log):
-        for character in self.current.arena.getallcharacter():
+    def checkdeaths(self, snapshot, log):
+        for character in snapshot.arena.getallcharacter():
             if not character.checkalive():
-                self.current.arena.findcharacterlocation(character).killcharacter(character)
-                if character in self.current.npcs:
-                    self.current.npcs.remove(character)
+                snapshot.arena.findcharacterlocation(character).killcharacter(character)
+                if character in snapshot.npcs:
+                    snapshot.npcs.remove(character)
 
-    def spawnMobs(self, log):
-        mobs = self.genMobs(self.current.pcs)
+    def spawnMobs(self, snapshot, log):
+        mobs = self.genMobs(snapshot.pcs)
         for mob in mobs:
-            self.spawn(mob)
-            self.current.npcs.append(mob)
+            self.spawn(snapshot, mob)
+            snapshot.npcs.append(mob)
 
     def snapshot(self):
-        return WorldSnapshot(self.current.arena)
+        return self.current
 
-    def move(self, who, direction, log):
-        point = self.current.arena.findcharacter(who)
+    def move(self, snapshot, who, direction, log):
+        point = snapshot.arena.findcharacter(who)
         to = point.add(directions[direction])
-        if self.current.arena.ingrid(to):
-            tolocation = self.current.arena.getlocation(to)
+        if snapshot.arena.ingrid(to):
+            tolocation = snapshot.arena.getlocation(to)
             if not tolocation.characters:
-                self.current.arena.moveitem(who, to)
+                snapshot.arena.moveitem(who, to)
                 log(who.name + " moved " + direction)
             elif len(tolocation.characters) > 0 and who.types[0] not in tolocation.characters:
                 who.attack(tolocation.characters[0])
                 log(who.name + " attacked " + tolocation.characters[0].name)
             else:
                 log(who.name + " can't move " + direction)
-        for item in self.current.arena.findcharacterlocation(who).items:
+        for item in snapshot.arena.findcharacterlocation(who).items:
             log("You see a " + str(item) + " here.")
 
-    def pickup(self, who, log):
-        location = self.current.arena.findcharacterlocation(who)
+    def pickup(self, snapshot, who, log):
+        location = snapshot.arena.findcharacterlocation(who)
         item = who.pickup(location.items.pop())
         log(who.name + " picks up " + str(item))
 
