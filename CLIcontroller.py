@@ -28,7 +28,7 @@ class CliController:
 
     def main(self):
         self.display(self.game.snapshot())
-        while self.game.isActive():
+        while self.game.is_active():
             try:
                 self.readActPrint()
             except Exception as e:
@@ -53,7 +53,7 @@ class CliController:
             return None
 
     def display(self, outsnapshot):
-        print(snapshot_printer.snapshotToString(outsnapshot))
+        print(snapshot_printer.snapshot_to_string(outsnapshot))
 
 
 if __name__ == '__main__':

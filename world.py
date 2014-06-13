@@ -50,11 +50,11 @@ def do_attempt(gen_mobs, snapshot, who, action):
     npc_action(snapshot, append)
     mobs = gen_mobs(snapshot.pcs)
     spawn_mobs(snapshot, mobs)
-    checkdeaths(snapshot)
+    check_deaths(snapshot)
     return log
 
 
-def checkdeaths(snapshot):
+def check_deaths(snapshot):
     for character in snapshot.arena.getallcharacter():
         if not character.checkalive():
             snapshot.arena.findcharacterlocation(character).killcharacter(character)

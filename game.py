@@ -5,8 +5,8 @@ __author__ = 'python'
 
 
 class Snapshot:
-    def __init__(self, worldsnap, hero, log):
-        self.worldsnap = worldsnap
+    def __init__(self, world_snapshot, hero, log):
+        self.world_snapshot = world_snapshot
         self.hero = hero
         self.log = log
 
@@ -18,7 +18,7 @@ class Game:
         world.spawn(self.world.current, self.hero)
         self.active = True
 
-    def isActive(self):
+    def is_active(self):
         return self.active
 
     def action(self, action):

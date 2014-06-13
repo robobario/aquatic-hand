@@ -4,7 +4,7 @@ from arena import Arena
 from bestiary import Cat
 from character import Pc
 from game import Snapshot
-from snapshot_printer import snapshotToString
+from snapshot_printer import snapshot_to_string
 from spatial import Point
 from world import WorldSnapshot
 
@@ -15,7 +15,7 @@ __author__ = 'python'
 class TestSnapshotToString(TestCase):
     def test_snapshotToString(self):
         snapshot = Snapshot(WorldSnapshot(Arena(1, 1)), Pc(), [])
-        stringed = snapshotToString(snapshot)
+        stringed = snapshot_to_string(snapshot)
         expected = "###\n# #\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected, stringed)
 
@@ -25,7 +25,7 @@ class TestSnapshotToString(TestCase):
         man = Pc()
         location.additem(man)
         snapshot = Snapshot(WorldSnapshot(arena), man, [])
-        stringed = snapshotToString(snapshot)
+        stringed = snapshot_to_string(snapshot)
         expected = "###\n#\u263A#\n###\nHP: 100, Strength: 10"
         self.assertEqual(expected, stringed)
 
@@ -35,7 +35,7 @@ class TestSnapshotToString(TestCase):
         cat = Cat()
         location.additem(cat)
         snapshot = Snapshot(WorldSnapshot(arena), cat, [])
-        stringed = snapshotToString(snapshot)
+        stringed = snapshot_to_string(snapshot)
         expected = "###\n#x#\n###\nHP: 10, Strength: 2"
         self.assertEqual(expected, stringed)
 
@@ -46,13 +46,13 @@ class TestSnapshotToString(TestCase):
         location.additem(cat)
         log = ["loglog", "log2"]
         snapshot = Snapshot(WorldSnapshot(arena), cat, log)
-        stringed = snapshotToString(snapshot)
+        stringed = snapshot_to_string(snapshot)
         expected = "###\n#x#\n###\n" + "\n".join(log) + "\nHP: 10, Strength: 2"
         self.assertEqual(expected, stringed)
 
     def test_emptyArena(self):
         snapshot = Snapshot(WorldSnapshot(Arena(0, 0)), Pc(), [])
-        self.assertRaises(Exception, lambda: snapshotToString(snapshot))
+        self.assertRaises(Exception, lambda: snapshot_to_string(snapshot))
 
     def test_snapshotNone(self):
-        self.assertRaises(Exception, lambda: snapshotToString(None))
+        self.assertRaises(Exception, lambda: snapshot_to_string(None))

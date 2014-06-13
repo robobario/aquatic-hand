@@ -1,7 +1,7 @@
 __author__ = 'python'
 
-availablepowers = {"strength": 0,
-                   "hp": 0}
+available_powers = {"strength": 0,
+                    "hp": 0}
 
 
 class Item:
@@ -14,7 +14,7 @@ class Item:
     def __init__(self, name):
         self.name = name
         self.description = ""
-        self.powers = availablepowers
+        self.powers = available_powers
         self.types = []
 
     def __str__(self):
