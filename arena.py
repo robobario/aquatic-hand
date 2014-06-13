@@ -9,6 +9,8 @@ __author__ = 'python'
 class Arena:
     def __init__(self, width, height):
         self.grid = []
+        self.width = width
+        self.height = height
         for x in range(height):
             row = []
             self.grid.append(row)

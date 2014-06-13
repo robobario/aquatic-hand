@@ -29,6 +29,11 @@ class TestArena(TestCase):
         arena.moveitem('asdf', Point(3, 5))
         self.assertCharacterLocation(arena, 3, 5)
 
+    def test_widthAndHeight(self):
+        arena = Arena(10, 4)
+        self.assertEqual(10, arena.width)
+        self.assertEqual(4, arena.height)
+
     def test_copy(self):
         arena = Arena(12, 12)
         arena.getlocation(Point(1, 2)).additem('asdf')
