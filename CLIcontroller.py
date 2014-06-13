@@ -43,14 +43,17 @@ class CliController:
         else:
             print("bad input")
 
-    def getinput(self):
-        return input("what do? ololo\n")
+    def getinput(self, message = "what do? ololo\n"):
+        return input(message)
 
     def translate(self, instr):
         if instr in actions:
             return actions[instr]
         else:
             return None
+
+    def multiInput(self, action):
+        pass
 
     def display(self, outsnapshot):
         print(snapshotToString(outsnapshot))

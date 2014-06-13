@@ -26,6 +26,11 @@ class Game:
         snap = self.world.snapshot()
         return Snapshot(snap, self.hero, log)
 
+    def query(self, query):
+        log = self.world.query(self.hero, query)
+        snap = self.world.snapshot()
+        return Snapshot(snap, self.hero, log)
+
     def snapshot(self):
         snap = self.world.snapshot()
         return Snapshot(snap, self.hero, [])
