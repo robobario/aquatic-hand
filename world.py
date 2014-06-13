@@ -21,14 +21,15 @@ directions = {
 
 class WorldSnapshot:
     def __init__(self, arena):
+        self.pcs = []
+        self.npcs = []
         self.arena = arena
 
 
 class World:
     def __init__(self):
-        self.pcs = []
-        self.npcs = []
-        self.arena = Arena(12, 12)
+        arena = Arena(12, 12)
+        self.current = WorldSnapshot(arena)
         self.bestiary = Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
         self.rng = lambda: random.randint(1, 100)
@@ -37,8 +38,8 @@ class World:
         def attempt(depth):
             if depth > 5:
                 return None
-            point = Point(self.rng() % self.arena.width, self.rng() % self.arena.height)
-            if not self.arena.getlocation(point).characters:
+            point = Point(self.rng() % self.current.arena.width, self.rng() % self.current.arena.height)
+            if not self.current.arena.getlocation(point).characters:
                 return point
             else:
                 return attempt(depth + 1)
@@ -46,7 +47,7 @@ class World:
         return attempt(0)
 
     def spawn(self, character):
-        location = self.arena.getlocation(self.randomUnoccupiedPoint())
+        location = self.current.arena.getlocation(self.randomUnoccupiedPoint())
         location.additem(character)
 
     def attempt(self, who, action):
@@ -62,44 +63,44 @@ class World:
         action.act(who, self, log)
 
     def npcaction(self, log):
-        for npc in self.npcs:
-            action = npc.decide(self.arena)
+        for npc in self.current.npcs:
+            action = npc.decide(self.current.arena)
             action.act(npc, self, log)
 
     def checkdeaths(self, log):
-        for character in self.arena.getallcharacter():
+        for character in self.current.arena.getallcharacter():
             if not character.checkalive():
-                self.arena.findcharacterlocation(character).killcharacter(character)
-                if character in self.npcs:
-                    self.npcs.remove(character)
+                self.current.arena.findcharacterlocation(character).killcharacter(character)
+                if character in self.current.npcs:
+                    self.current.npcs.remove(character)
 
     def spawnMobs(self, log):
-        mobs = self.genMobs(self.pcs)
+        mobs = self.genMobs(self.current.pcs)
         for mob in mobs:
             self.spawn(mob)
-            self.npcs.append(mob)
+            self.current.npcs.append(mob)
 
     def snapshot(self):
-        return WorldSnapshot(self.arena)
+        return WorldSnapshot(self.current.arena)
 
     def move(self, who, direction, log):
-        point = self.arena.findcharacter(who)
+        point = self.current.arena.findcharacter(who)
         to = point.add(directions[direction])
-        if self.arena.ingrid(to):
-            tolocation = self.arena.getlocation(to)
+        if self.current.arena.ingrid(to):
+            tolocation = self.current.arena.getlocation(to)
             if not tolocation.characters:
-                self.arena.moveitem(who, to)
+                self.current.arena.moveitem(who, to)
                 log(who.name + " moved " + direction)
             elif len(tolocation.characters) > 0 and who.types[0] not in tolocation.characters:
                 who.attack(tolocation.characters[0])
                 log(who.name + " attacked " + tolocation.characters[0].name)
             else:
                 log(who.name + " can't move " + direction)
-        for item in self.arena.findcharacterlocation(who).items:
+        for item in self.current.arena.findcharacterlocation(who).items:
             log("You see a " + str(item) + " here.")
 
     def pickup(self, who, log):
-        location = self.arena.findcharacterlocation(who)
+        location = self.current.arena.findcharacterlocation(who)
         item = who.pickup(location.items.pop())
         log(who.name + " picks up " + str(item))
 
