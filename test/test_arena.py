@@ -18,11 +18,6 @@ class TestArena(TestCase):
         arena.getlocation(Point(1, 2)).additem('asdf')
         self.assertCharacterLocation(arena, 1, 2)
 
-    def assertCharacterLocation(self, arena, i, y):
-        found = arena.findcharacter('asdf')
-        self.assertEqual(found.x, i)
-        self.assertEqual(found.y, y)
-
     def test_moveitem(self):
         arena = Arena(12, 12)
         arena.getlocation(Point(1, 2)).additem('asdf')
@@ -51,3 +46,8 @@ class TestArena(TestCase):
         self.assertEqual(arena.ingrid(Point(0, 5)), True)
         self.assertEqual(arena.ingrid(Point(1, 12)), False)
         self.assertEqual(arena.ingrid(Point(12, 1)), False)
+
+    def assertCharacterLocation(self, arena, x, y):
+        found = arena.findcharacter('asdf')
+        self.assertEqual(found.x, x)
+        self.assertEqual(found.y, y)
