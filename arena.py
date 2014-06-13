@@ -1,4 +1,7 @@
+import copy
+
 from spatial import Point
+
 
 __author__ = 'python'
 
@@ -39,6 +42,8 @@ class Arena:
     def ingrid(self, point):
         return 0 <= point.x < len(self.grid) and 0 <= point.y < len(self.grid[0])
 
+    def copy(self):
+        return copy.deepcopy(self)
 
 class Location:
     def __init__(self):
