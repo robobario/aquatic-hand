@@ -5,9 +5,9 @@ __author__ = 'python'
 
 
 class Snapshot:
-    def __init__(self, world_snapshot, hero, log):
+    def __init__(self, world_snapshot, hero_id, log):
         self.world_snapshot = world_snapshot
-        self.hero_id = hero
+        self.hero_id = hero_id
         self.log = log
 
 

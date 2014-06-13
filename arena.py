@@ -19,26 +19,25 @@ class Arena:
             for y in range(width):
                 row.append(Location())
 
-    def getlocation(self, point):
+    def get_location(self, point):
         return self.grid[point.x][point.y]
 
-    def findcharacter(self, character):
+    def find_character(self, character):
         for x in range(len(self.grid)):
             for y in range(len(self.grid[x])):
                 if character in self.grid[x][y]:
                     return spatial.Point(x, y)
 
-    def getallcharacter(self):
-        allcharacters = []
+    def get_all_character(self):
+        all_characters = []
         for x in self.grid:
             for y in x:
                 for z in y.characters:
-                    allcharacters.append(z)
-        return allcharacters
+                    all_characters.append(z)
+        return all_characters
 
-    def findcharacterlocation(self, character):
-        return self.getlocation(self.findcharacter(character))
-
+    def find_character_location(self, character):
+        return self.get_location(self.find_character(character))
 
     def find(self, character_id):
         for x in range(len(self.grid)):
@@ -48,8 +47,8 @@ class Arena:
                         return char
         return None
 
-    def moveitem(self, item, to):
-        self.getlocation(self.findcharacter(item)).removeitem(item)
+    def move_item(self, item, to):
+        self.get_location(self.find_character(item)).removeitem(item)
         self.grid[to.x][to.y].additem(item)
 
     def ingrid(self, point):
@@ -58,12 +57,12 @@ class Arena:
     def copy(self):
         return copy.deepcopy(self)
 
-    def randomUnoccupiedPoint(self):
+    def random_unoccupied_point(self):
         def attempt(depth):
             if depth > 5:
                 return None
             point = spatial.Point(self.rng() % self.width, self.rng() % self.height)
-            if not self.getlocation(point).characters:
+            if not self.get_location(point).characters:
                 return point
             else:
                 return attempt(depth + 1)

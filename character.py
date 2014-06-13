@@ -80,7 +80,7 @@ class Npc(Character):
         return False
 
     def decide(self, arena):
-        point = arena.findcharacter(self)
+        point = arena.find_character(self)
         t = self.find_target(arena, point)
         if t:
             return move_toward(point, t)

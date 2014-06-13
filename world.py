@@ -55,9 +55,9 @@ def do_attempt(gen_mobs, snapshot, hero_id, action):
 
 
 def check_deaths(snapshot):
-    for character in snapshot.arena.getallcharacter():
+    for character in snapshot.arena.get_all_character():
         if not character.check_alive():
-            snapshot.arena.findcharacterlocation(character).killcharacter(character)
+            snapshot.arena.find_character_location(character).killcharacter(character)
             if character in snapshot.npcs:
                 snapshot.npcs.remove(character)
 
@@ -79,30 +79,30 @@ def spawn_mobs(snapshot, mobs):
 
 
 def spawn(snapshot, character):
-    location = snapshot.arena.getlocation(snapshot.arena.randomUnoccupiedPoint())
+    location = snapshot.arena.get_location(snapshot.arena.random_unoccupied_point())
     location.additem(character)
 
 
 def move(snapshot, hero_id, direction, log):
     who = snapshot.arena.find(hero_id)
-    point = snapshot.arena.findcharacter(who)
+    point = snapshot.arena.find_character(who)
     to = point.add(directions[direction])
     if snapshot.arena.ingrid(to):
-        to_location = snapshot.arena.getlocation(to)
+        to_location = snapshot.arena.get_location(to)
         if not to_location.characters:
-            snapshot.arena.moveitem(who, to)
+            snapshot.arena.move_item(who, to)
             log(who.name + " moved " + direction)
         elif len(to_location.characters) > 0 and who.types[0] not in to_location.characters[0].types:
             who.attack(to_location.characters[0])
             log(who.name + " attacked " + to_location.characters[0].name)
         else:
             log(who.name + " can't move " + direction)
-    for item in snapshot.arena.findcharacterlocation(who).items:
+    for item in snapshot.arena.find_character_location(who).items:
         log("You see a " + str(item) + " here.")
 
 
 def pickup(snapshot, hero_id, log):
     who = snapshot.arena.find(hero_id)
-    location = snapshot.arena.findcharacterlocation(who)
+    location = snapshot.arena.find_character_location(who)
     item = who.pickup(location.items.pop())
     log(who.name + " picks up " + str(item))

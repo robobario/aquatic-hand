@@ -10,18 +10,18 @@ __author__ = 'python'
 class TestArena(TestCase):
     def test_getlocation(self):
         arena = Arena(12, 12)
-        arena.getlocation(Point(1, 1)).additem('asdf')
-        arena.getlocation(Point(1, 1)).removeitem('asdf')
+        arena.get_location(Point(1, 1)).additem('asdf')
+        arena.get_location(Point(1, 1)).removeitem('asdf')
 
     def test_findcharacter(self):
         arena = Arena(12, 12)
-        arena.getlocation(Point(1, 2)).additem('asdf')
+        arena.get_location(Point(1, 2)).additem('asdf')
         self.assertCharacterLocation(arena, 1, 2)
 
     def test_moveitem(self):
         arena = Arena(12, 12)
-        arena.getlocation(Point(1, 2)).additem('asdf')
-        arena.moveitem('asdf', Point(3, 5))
+        arena.get_location(Point(1, 2)).additem('asdf')
+        arena.move_item('asdf', Point(3, 5))
         self.assertCharacterLocation(arena, 3, 5)
 
     def test_widthAndHeight(self):
@@ -31,9 +31,9 @@ class TestArena(TestCase):
 
     def test_copy(self):
         arena = Arena(12, 12)
-        arena.getlocation(Point(1, 2)).additem('asdf')
+        arena.get_location(Point(1, 2)).additem('asdf')
         copy = arena.copy()
-        copy.moveitem('asdf', Point(3, 5))
+        copy.move_item('asdf', Point(3, 5))
         self.assertCharacterLocation(copy, 3, 5)
         self.assertCharacterLocation(arena, 1, 2)
 
@@ -48,6 +48,6 @@ class TestArena(TestCase):
         self.assertEqual(arena.ingrid(Point(12, 1)), False)
 
     def assertCharacterLocation(self, arena, x, y):
-        found = arena.findcharacter('asdf')
+        found = arena.find_character('asdf')
         self.assertEqual(found.x, x)
         self.assertEqual(found.y, y)
