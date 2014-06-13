@@ -20,35 +20,18 @@ directions = {
 
 
 class WorldSnapshot:
-    def __init__(self, arena):
-        self.arena = arena
+    def __init__(self, current_arena):
+        self.pcs = []
+        self.npcs = []
+        self.arena = current_arena
 
 
 class World:
     def __init__(self):
-        self.pcs = []
-        self.npcs = []
-        self.width = 12
-        self.height = 12
-        self.arena = Arena(self.width, self.height)
-        self.bestiary = Bestiary()
+        an_arena = arena.Arena(12, 12)
+        self.current = WorldSnapshot(an_arena)
+        self.bestiary = bestiary.Bestiary()
         self.genMobs = self.bestiary.getRandomMobs
-
-    def randomUnoccupiedPoint(self):
-        def attempt(depth):
-            if depth > 5:
-                return None
-            point = Point(self.rng() % self.width, self.rng() % self.height)
-            if not self.arena.getlocation(point).characters:
-                return point
-            else:
-                return attempt(depth + 1)
-
-        return attempt(0)
-
-    def spawn(self, character):
-        location = self.arena.getlocation(self.randomUnoccupiedPoint())
-        location.additem(character)
 
     def attempt(self, who, action):
         new_state = copy.deepcopy(self.current)
@@ -63,23 +46,27 @@ class World:
 def do_attempt(gen_mobs, snapshot, who, action):
     log = []
     append = log.append
-    pcaction(snapshot, who, action, append)
-    npcaction(snapshot, append)
+    pc_action(snapshot, who, action, append)
+    npc_action(snapshot, append)
     mobs = gen_mobs(snapshot.pcs)
-    spawnMobs(snapshot, mobs)
-    checkdeaths(snapshot)
+    spawn_mobs(snapshot, mobs)
+    check_deaths(snapshot)
     return log
     
 
 
+def check_deaths(snapshot):
+    for character in snapshot.arena.getallcharacter():
+        if not character.checkalive():
+            snapshot.arena.findcharacterlocation(character).killcharacter(character)
+            if character in snapshot.npcs:
+                snapshot.npcs.remove(character)
 
     def pcaction(self, who, action, log):
         action.act(who, self, log)
 
-    def npcaction(self, log):
-        for npc in self.npcs:
-            action = npc.decide(self.arena)
-            action.act(npc, self, log)
+def pc_action(snapshot, who, action, log):
+    action.act(who, snapshot, log)
 
     def checkdeaths(self, log):
         for character in self.arena.getallcharacter():
@@ -88,30 +75,18 @@ def do_attempt(gen_mobs, snapshot, who, action):
                 if character in self.npcs:
                     self.npcs.remove(character)
 
-    def spawnMobs(self, log):
-        mobs = self.genMobs(self.pcs)
-        for mob in mobs:
-            self.spawn(mob)
-            self.npcs.append(mob)
+def npc_action(snapshot, log):
+    for npc in snapshot.npcs:
+        action = npc.decide(snapshot.arena)
+        action.act(npc, snapshot, log)
 
     def snapshot(self):
         return WorldSnapshot(self.arena)
 
-    def move(self, who, direction, log):
-        point = self.arena.findcharacter(who)
-        to = point.add(directions[direction])
-        if self.arena.ingrid(to):
-            tolocation = self.arena.getlocation(to)
-            if not tolocation.characters:
-                self.arena.moveitem(who, to)
-                log(who.name + " moved " + direction)
-            elif len(tolocation.characters) > 0 and who.types[0] not in tolocation.characters:
-                who.attack(tolocation.characters[0])
-                log(who.name + " attacked " + tolocation.characters[0].name)
-            else:
-                log(who.name + " can't move " + direction)
-        for item in self.arena.findcharacterlocation(who).items:
-            log("You see a " + str(item) + " here.")
+def spawn_mobs(snapshot, mobs):
+    for mob in mobs:
+        spawn(snapshot, mob)
+        snapshot.npcs.append(mob)
 
     def pickup(self, who, log):
         location = self.arena.findcharacterlocation(who)
@@ -120,5 +95,20 @@ def do_attempt(gen_mobs, snapshot, who, action):
 
 
 
+def move(snapshot, who, direction, log):
+    point = snapshot.arena.findcharacter(who)
+    to = point.add(directions[direction])
+    if snapshot.arena.ingrid(to):
+        to_location = snapshot.arena.getlocation(to)
+        if not to_location.characters:
+            snapshot.arena.moveitem(who, to)
+            log(who.name + " moved " + direction)
+        elif len(to_location.characters) > 0 and who.types[0] not in to_location.characters[0].types:
+            who.attack(to_location.characters[0])
+            log(who.name + " attacked " + to_location.characters[0].name)
+        else:
+            log(who.name + " can't move " + direction)
+    for item in snapshot.arena.findcharacterlocation(who).items:
+        log("You see a " + str(item) + " here.")
 
 

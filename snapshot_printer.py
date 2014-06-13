@@ -6,8 +6,9 @@ symbols = {
     "fancy": "*"
 }
 
-def getArena(snapshot):
-    world = snapshot.worldsnap
+
+def get_arena(snapshot):
+    world = snapshot.world_snapshot
     if world is None:
         raise Exception('world is none')
     arena = world.arena
@@ -18,51 +19,51 @@ def getArena(snapshot):
     return arena
 
 
-def printLog(log):
+def print_log(log):
     if log:
         return "\n".join(log) + "\n"
     else:
         return ""
 
 
-def snapshotToString(snapshot):
+def snapshot_to_string(snapshot):
     if snapshot is None:
         raise Exception('snapshot is none')
-    arena = getArena(snapshot)
-    result = printGrid(arena)
+    arena = get_arena(snapshot)
+    result = print_grid(arena)
     hero = snapshot.hero
-    result += printLog(snapshot.log)
-    result += printHero(hero)
+    result += print_log(snapshot.log)
+    result += print_hero(hero)
     return result
 
 
-def symbolForLocation(location):
-    printitem = location.getprintitem()
-    if printitem:
-        type = printitem.types[0]
+def symbol_for_location(location):
+    print_item = location.getprintitem()
+    if print_item:
+        type = print_item.types[0]
         if type in symbols:
             return symbols[type]
     return "\u263A"
 
 
-def printRow(row):
+def print_row(row):
     result = ""
     for location in row:
         if len(location) > 0:
-            result += symbolForLocation(location)
+            result += symbol_for_location(location)
         else:
             result += ' '
     return result
 
 
-def printGrid(arena):
+def print_grid(arena):
     result = ""
     result += "#" * (len(arena.grid[0]) + 2) + "\n"
     for row in arena.grid:
-        result += "#" + printRow(row) + "#" + "\n"
+        result += "#" + print_row(row) + "#" + "\n"
     result += "#" * (len(arena.grid) + 2) + "\n"
     return result
 
 
-def printHero(hero):
+def print_hero(hero):
     return "HP: " + str(hero.hp) + ", Strength: " + str(hero.strength)
