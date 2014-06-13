@@ -12,7 +12,7 @@ char_id = 1
 
 def next_id():
     global char_id
-    char_id = char_id + 1
+    char_id += 1
     return char_id
 
 

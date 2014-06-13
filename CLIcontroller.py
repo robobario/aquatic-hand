@@ -27,33 +27,36 @@ class CliController:
         self.game = game.Game()
 
     def main(self):
-        self.display(self.game.snapshot())
+        display(self.game.snapshot())
         while self.game.is_active():
             try:
-                self.readActPrint()
+                self.read_act_print()
             except Exception as e:
                 logging.exception(e)
 
-    def readActPrint(self):
-        instr = self.getinput()
-        action = self.translate(instr)
+    def read_act_print(self):
+        instr = get_input()
+        action = translate(instr)
         if action is not None:
-            outsnapshot = self.game.action(action)
-            self.display(outsnapshot)
+            out_snapshot = self.game.action(action)
+            display(out_snapshot)
         else:
             print("bad input")
 
-    def getinput(self):
-        return input("what do? ololo\n")
 
-    def translate(self, instr):
-        if instr in stringToAction:
-            return stringToAction[instr]
-        else:
-            return None
+def get_input():
+    return input("what do? ololo\n")
 
-    def display(self, outsnapshot):
-        print(snapshot_printer.snapshot_to_string(outsnapshot))
+
+def translate(instr):
+    if instr in stringToAction:
+        return stringToAction[instr]
+    else:
+        return None
+
+
+def display(out_snapshot):
+    print(snapshot_printer.snapshot_to_string(out_snapshot))
 
 
 if __name__ == '__main__':

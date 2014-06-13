@@ -18,6 +18,7 @@ class PickUp:
     def act(self, snapshot, hero_id, log):
         world.pickup(hero_id, snapshot, log)
 
+
 class Rest:
     def act(self, snapshot, hero_id, log):
         pass
