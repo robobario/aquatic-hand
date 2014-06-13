@@ -16,18 +16,18 @@ class TestWorld(TestCase):
         the_world = world.World()
         man = character.Pc()
         the_world.current.arena.get_location(spatial.Point(1, 5)).additem(man)
-        self.assertEqual(the_world.current.arena.find_character(man).gettuple(), spatial.Point(1, 5).gettuple())
+        self.assertEqual(the_world.current.arena.find_character(man), spatial.Point(1, 5))
         world.move(the_world.current, man.id, 'E', lambda x: x)
-        self.assertEqual(the_world.current.arena.find_character(man).gettuple(), spatial.Point(1, 6).gettuple())
+        self.assertEqual(the_world.current.arena.find_character(man), spatial.Point(1, 6))
         world.move(the_world.current, man.id, 'N', lambda x: x)
-        self.assertEqual(the_world.current.arena.find_character(man).gettuple(), spatial.Point(0, 6).gettuple())
+        self.assertEqual(the_world.current.arena.find_character(man), spatial.Point(0, 6))
 
     def test_move_edgecase(self):
         the_world = world.World()
         man = character.Pc()
         the_world.current.arena.get_location(spatial.Point(11, 11)).additem(man)
         world.move(the_world.current, man.id, 'E', lambda x: x)
-        self.assertEqual(the_world.current.arena.find_character(man).gettuple(), spatial.Point(11, 11).gettuple())
+        self.assertEqual(the_world.current.arena.find_character(man), spatial.Point(11, 11))
 
     def test_death(self):
         the_world = world.World()
