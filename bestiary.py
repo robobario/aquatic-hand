@@ -11,7 +11,7 @@ class Bestiary:
     def __init__(self):
         self.rng = lambda: random.randint(1, 5)
 
-    def getRandomMobs(self, heroes):
+    def get_random_mobs(self, heroes):
         mobs = []
         if self.rng() % 5 == 0:
             mobs.append(Cat())
