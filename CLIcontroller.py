@@ -2,6 +2,7 @@ import logging
 
 import actions
 import game
+import queries
 import snapshot_printer
 
 
@@ -21,6 +22,9 @@ stringToAction = {
     "pickup": actions.PickUp()
 }
 
+stringToQuery = {
+    'inventory': queries.inventory()
+}
 
 class CliController:
     def __init__(self):
@@ -36,21 +40,37 @@ class CliController:
 
     def read_act_print(self):
         instr = get_input()
-        action = translate(instr)
+        action = translate(instr, self.game)
         if action is not None:
-            out_snapshot = self.game.action(action)
-            display(out_snapshot)
+            action()
         else:
             print("bad input")
+
+
+def action_curry(action, this_game):
+    def inner():
+        out_snapshot = this_game.action(action)
+        display(out_snapshot)
+
+    return inner
+
+
+def query_curry(action, this_game):
+    def inner():
+        pass
+
+    return inner
 
 
 def get_input():
     return input("what do? ololo\n")
 
 
-def translate(instr):
+def translate(instr, this_game):
     if instr in stringToAction:
-        return stringToAction[instr]
+        return action_curry(stringToAction[instr], this_game)
+    elif instr in stringToQuery:
+        return query_curry(stringToQuery[instr], this_game)
     else:
         return None
 
