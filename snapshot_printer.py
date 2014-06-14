@@ -70,5 +70,5 @@ def print_hero(hero):
 
 
 def print_inventory(inventory):
-    for item in inventory:
-        print(item)
+    result = list(map(str, inventory))
+    return '\n'.join(result)

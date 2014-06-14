@@ -22,14 +22,17 @@ stringToAction = {
     "pickup": actions.PickUp()
 }
 
+
 class QueryAndHandler:
     def __init__(self, query, handler=snapshot_printer.print_inventory):
         self.query = query
         self.handler = handler
 
+
 stringToQuery = {
     'inventory': QueryAndHandler(queries.inventory)
 }
+
 
 class CliController:
     def __init__(self):
@@ -60,8 +63,7 @@ def action_curry(action, this_game):
 def query_curry(query_and_handler, this_game):
     def inner():
         result = this_game.query(query_and_handler.query)
-        query_and_handler.handler(result)
-        pass
+        print(query_and_handler.handler(result))
 
     return inner
 
