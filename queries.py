@@ -1,8 +1,6 @@
 __author__ = 'python'
 
-class inventory:
-    def __init__(self):
-        pass
+def inventory(snapshot, hero_id):
+    character = snapshot.arena.find(hero_id)
+    return character.inventory
 
-    def query(self, snapshot, hero_id, log, callback):
-        pass

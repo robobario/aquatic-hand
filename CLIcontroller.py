@@ -22,8 +22,13 @@ stringToAction = {
     "pickup": actions.PickUp()
 }
 
+class QueryAndHandler:
+    def __init__(self, query, handler=snapshot_printer.print_inventory):
+        self.query = query
+        self.handler = handler
+
 stringToQuery = {
-    'inventory': queries.inventory()
+    'inventory': QueryAndHandler(queries.inventory)
 }
 
 class CliController:
@@ -41,10 +46,7 @@ class CliController:
     def read_act_print(self):
         instr = get_input()
         action = translate(instr, self.game)
-        if action is not None:
-            action()
-        else:
-            print("bad input")
+        action()
 
 
 def action_curry(action, this_game):
@@ -55,8 +57,10 @@ def action_curry(action, this_game):
     return inner
 
 
-def query_curry(action, this_game):
+def query_curry(query_and_handler, this_game):
     def inner():
+        result = this_game.query(query_and_handler.query)
+        query_and_handler.handler(result)
         pass
 
     return inner
@@ -72,7 +76,7 @@ def translate(instr, this_game):
     elif instr in stringToQuery:
         return query_curry(stringToQuery[instr], this_game)
     else:
-        return None
+        return lambda: print('bad input')
 
 
 def display(out_snapshot):

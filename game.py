@@ -32,5 +32,5 @@ class Game:
         return Snapshot(snap, self.hero_id, [])
 
     def query(self, query):
-        pass
+        return query(self.world.snapshot(), self.hero_id)
 

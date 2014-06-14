@@ -67,3 +67,8 @@ def print_grid(arena):
 
 def print_hero(hero):
     return "HP: " + str(hero.hp) + ", Strength: " + str(hero.strength)
+
+
+def print_inventory(inventory):
+    for item in inventory:
+        print(item)
