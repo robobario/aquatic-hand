@@ -1,62 +1,62 @@
 import logging
 
-from actions import Move, PickUp
-from game import Game
-from snapshot_printer import snapshotToString
+import actions
+import game
+import snapshot_printer
 
 
 __author__ = 'python'
 
 logging.basicConfig(level=logging.DEBUG)
 
-actions = {
-    "up": Move("N"),
-    "down": Move("S"),
-    "left": Move("W"),
-    "right": Move("E"),
-    "upright": Move("NE"),
-    "upleft": Move("NW"),
-    "downright": Move("SE"),
-    "downleft": Move("SW"),
-    "pickup": PickUp()
+stringToAction = {
+    "up": actions.Move("N"),
+    "down": actions.Move("S"),
+    "left": actions.Move("W"),
+    "right": actions.Move("E"),
+    "upright": actions.Move("NE"),
+    "upleft": actions.Move("NW"),
+    "downright": actions.Move("SE"),
+    "downleft": actions.Move("SW"),
+    "pickup": actions.PickUp()
 }
 
 
 class CliController:
     def __init__(self):
-        self.game = Game()
+        self.game = game.Game()
 
     def main(self):
-        self.display(self.game.snapshot())
+        display(self.game.snapshot())
         while self.game.is_active():
             try:
-                self.readActPrint()
+                self.read_act_print()
             except Exception as e:
                 logging.exception(e)
 
-    def readActPrint(self):
-        instr = self.getinput()
-        action = self.translate(instr)
+    def read_act_print(self):
+        instr = get_input()
+        action = translate(instr)
         if action is not None:
-            outsnapshot = self.game.action(action)
-            self.display(outsnapshot)
+            out_snapshot = self.game.action(action)
+            display(out_snapshot)
         else:
             print("bad input")
 
-    def getinput(self, message = "what do? ololo\n"):
-        return input(message)
 
-    def translate(self, instr):
-        if instr in actions:
-            return actions[instr]
-        else:
-            return None
+def get_input():
+    return input("what do? ololo\n")
 
-    def multiInput(self, action):
-        pass
 
-    def display(self, outsnapshot):
-        print(snapshot_printer.snapshot_to_string(outsnapshot))
+def translate(instr):
+    if instr in stringToAction:
+        return stringToAction[instr]
+    else:
+        return None
+
+
+def display(out_snapshot):
+    print(snapshot_printer.snapshot_to_string(out_snapshot))
 
 
 if __name__ == '__main__':

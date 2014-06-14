@@ -31,7 +31,7 @@ def snapshot_to_string(snapshot):
         raise Exception('snapshot is none')
     arena = get_arena(snapshot)
     result = print_grid(arena)
-    hero = snapshot.hero
+    hero = snapshot.world_snapshot.arena.find(snapshot.hero_id)
     result += print_log(snapshot.log)
     result += print_hero(hero)
     return result
